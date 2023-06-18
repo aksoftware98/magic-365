@@ -1,1 +1,6 @@
-GET http://localhost:7205/api/Function1
+POST http://localhost:7205/api/Function1
+Content-Type: application/json
+
+{
+  "message": "Do my daily morning exercise. I want to buy some fresh fruits I will study for the Azure exam I will play football with the team at 02:25 PM Then I will meet John and Daniel to follow up with the progress of the project at 05:00 PM"
+}

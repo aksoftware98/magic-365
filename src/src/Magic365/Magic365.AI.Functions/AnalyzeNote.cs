@@ -112,13 +112,15 @@ namespace Magic365.AI.Functions
                     new
                     {
                         role = "user",
-                        content = ""
+                        content = noteRequest.Message
 					}
                 }
             });
-            log.LogError(await response.Content.ReadAsStringAsync());
+            
+            var result = await response.Content.ReadFromJsonAsync<NoteResponse>();
+            var plan = JsonSerializer.Deserialize<PlanItem[]>(result?.Choices[0].Message.Content);
 
-            return new OkObjectResult(await response.Content.ReadFromJsonAsync<object>());
+            return new OkObjectResult(plan);
         }
     }
 
@@ -130,6 +132,38 @@ namespace Magic365.AI.Functions
 
     public class NoteResponse
     {
+        [JsonPropertyName("choices")]
+        public Choice[] Choices { get; set; }
+    }
 
+    public class Choice
+    {
+        [JsonPropertyName("message")]
+        public ResponseMessage Message { get; set; }    
+    }
+
+    public class ResponseMessage
+    {
+        [JsonPropertyName("role")]
+		public string Role { get; set; }
+
+        [JsonPropertyName("content")]
+		public string Content { get; set; }
+    }
+
+    public class PlanItem
+    {
+        [JsonPropertyName("action")]
+        public string Action { get; set; }
+		[JsonPropertyName("startTime")]
+		public string StartTime { get; set; }
+		[JsonPropertyName("endTime")]
+		public string EndTime { get; set; }
+		[JsonPropertyName("startDate")]
+		public string StartDate { get; set; }
+		[JsonPropertyName("endDate")]
+		public string EndDate { get; set; }
+		[JsonPropertyName("people")]
+		public string[] People { get; set; }
     }
 }
