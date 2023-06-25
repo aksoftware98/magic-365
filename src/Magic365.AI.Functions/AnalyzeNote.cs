@@ -155,6 +155,8 @@ namespace Magic365.AI.Functions
     {
         [JsonPropertyName("action")]
         public string Action { get; set; }
+        [JsonPropertyName("type")]
+        public string Type { get; set; }
 		[JsonPropertyName("startTime")]
 		public string StartTime { get; set; }
 		[JsonPropertyName("endTime")]

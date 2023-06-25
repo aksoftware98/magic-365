@@ -23,11 +23,11 @@ namespace Magic365.Core.Services
 	public class GraphPlanningService : IPlanningService
 	{
 
-		private readonly ILanguageUnderstnadingService _language;
+		private readonly ILanguageUnderstandingService _language;
 		private readonly GraphServiceClient _graph;
 		private readonly HttpClient _httpClient;
         private readonly ILogger<GraphPlanningService> _logger;
-        public GraphPlanningService(ILanguageUnderstnadingService language,
+        public GraphPlanningService(ILanguageUnderstandingService language,
                                     GraphServiceClient graph,
                                     HttpClient httpClient,
                                     ILogger<GraphPlanningService> logger)

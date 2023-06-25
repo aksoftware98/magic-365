@@ -1,5 +1,6 @@
 ﻿using Magic365.Core.Interfaces;
 using Magic365.Core.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,24 @@ namespace Magic365.Core
 			if (string.IsNullOrWhiteSpace(apiKey))
 				throw new ArgumentNullException(nameof(apiKey));
 			
-			return services.AddScoped<ILanguageUnderstnadingService>(sp => new ConversationalLanguageUnderstandingService(sp.GetRequiredService<HttpClient>(), apiKey));
+			return services.AddScoped<ILanguageUnderstandingService>(sp => new ConversationalLanguageUnderstandingService(sp.GetRequiredService<HttpClient>(), apiKey));
+		}
+
+		public static IServiceCollection AddCoreServices(this IServiceCollection services, IConfiguration config)
+		{
+			return services.AddAnalyzerFunctionOptions(config)
+				.AddScoped<INoteAnalyzingService, NoteAnalyzingService>();
+		}
+
+		public static IServiceCollection AddAnalyzerFunctionOptions(this IServiceCollection services, IConfiguration config)
+		{
+			return services.AddSingleton(sp =>
+			{
+				var options = new Options.AIAnalyzerOptions();
+				options.AnalyzeUrl = config["AnalyzerFunction:Url"];
+				options.ApiKey = config["AnalyzerFunction:ApiKey"];
+				return options;
+			});
 		}
 
 		public static IServiceCollection AddPlanningService(this IServiceCollection services)

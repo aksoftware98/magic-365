@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace Magic365.Core.Services
 {
-	public class ConversationalLanguageUnderstandingService : ILanguageUnderstnadingService
+	[Obsolete("This class is not used anymore. The logic has been migrated from using Azure Cognitive Services to OpenAI GPT-3.")]
+	public class ConversationalLanguageUnderstandingService : ILanguageUnderstandingService
 	{
 
 		private readonly HttpClient _httpClient;

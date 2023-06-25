@@ -25,9 +25,10 @@ builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddLanguageUnderstandingService(builder.Configuration["LanguageServiceApiKey"] ?? string.Empty);
+builder.Services.AddCoreServices(builder.Configuration);
 
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddPlanningService();
+
 
 // Add the Graph service client and an authorized HttpClient 
 builder.Services.AddAuthorizedHttpClient();
@@ -49,9 +50,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 #region API Endpoints
-app.MapPost("/analyze-note", async ([FromBody]SubmitNoteRequest note, IPlanningService planningService) =>
+app.MapPost("/analyze-note", async ([FromBody]SubmitNoteRequest note, INoteAnalyzingService analyzingService) =>
 {
-	var result = await planningService.AnalyzeNoteAsync(note);
+	var result = await analyzingService.AnalyzePlanAsync(note.Query);
 	return Results.Ok(result);
 })
 	.WithName("Analyze Note")
