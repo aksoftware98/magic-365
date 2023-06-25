@@ -30,5 +30,27 @@ namespace Magic365.Core.Models
 		public string? EndDate { get; set; }
 		[JsonPropertyName("people")]
 		public string[]? People { get; set; }
+
+		public string StartDateTime
+		{
+			get
+			{
+				if (string.IsNullOrWhiteSpace(StartDate) || string.IsNullOrWhiteSpace(StartTime))
+					return string.Empty;
+
+				return $"{StartDate} {StartTime}";
+			}
+		}
+
+		public string EndDateTime
+		{
+			get
+			{
+				if (string.IsNullOrWhiteSpace(EndDate) || string.IsNullOrWhiteSpace(EndTime))
+					return string.Empty;
+
+				return $"{EndDate} {EndTime}";
+			}
+		}
 	}
 }

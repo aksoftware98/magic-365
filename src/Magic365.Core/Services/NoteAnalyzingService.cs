@@ -64,18 +64,29 @@ namespace Magic365.Core.Services
 							items.Add(new PlanItem
 							{
 								Title = planItem.Action,
+								Type = PlanEntityType.ToDoItem,
 							});
 							break;
 						case "Event":
 							items.Add(new PlanItem
 							{
 								Title = planItem.Action,
+								EndTime = DateTime.ParseExact(planItem.EndDateTime, "yyyy-MM-dd hh:mm tt", null),
+								StartTime = DateTime.ParseExact(planItem.StartDateTime, "yyyy-MM-dd hh:mm tt", null),
+								Type = PlanEntityType.Event
 							});
 							break;
 						case "Meeting":
 							items.Add(new PlanItem
 							{
 								Title = planItem.Action,
+								EndTime = DateTime.ParseExact(planItem.EndDateTime, "yyyy-MM-dd hh:mm tt", null),
+								StartTime = DateTime.ParseExact(planItem.StartDateTime, "yyyy-MM-dd hh:mm tt", null),
+								Type = PlanEntityType.Meeting,
+								People = planItem?.People?.Select(p => new MeetingPerson
+								{
+									Name = p
+								})
 							});
 							break;
 						default:
