@@ -58,6 +58,8 @@ namespace Magic365.Core.Services
 				var items = new List<PlanItem>();
 				foreach (var planItem in analyzerResult)
 				{
+					if (planItem.StartTime == null && planItem.EndTime == null)
+						planItem.Type = "ToDoItem";
 					switch (planItem.Type)
 					{
 						case "ToDoItem":

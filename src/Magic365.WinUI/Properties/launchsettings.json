@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "Magic365.WinUI (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "Magic365.WinUI (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}
