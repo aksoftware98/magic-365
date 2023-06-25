@@ -1,0 +1,133 @@
+<!-- Copyright (c) Microsoft Corporation and Contributors. -->
+<!-- Licensed under the MIT License. -->
+
+<Page
+    x:Class="Magic365.Client.WinUI.Pages.PlanningPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Magic365.Client.WinUI.Pages"
+    xmlns:root="using:Magic365.Client.WinUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:Magic365.Client.ViewModels"
+    mc:Ignorable="d"
+    DataContext="{x:Bind ViewModel}">
+
+    <Page.Resources>
+        <root:PlanItemDataTemplateSelector x:Key="PlanItemTemplateSelector"
+                                               EventPlanTemplate="{StaticResource EventPlanDataTemplate}"
+                                               MeetingPlanTemplate="{StaticResource MeetingPlanDataTemplate}"
+                                               ToDoItemPlanTemplate="{StaticResource ToDoItemPlanDataTemplate}"/>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Text input side -->
+        <Grid Grid.Column="0"
+              Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+              Padding="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0">
+                <TextBlock FontSize="26" 
+                       Text="Hey! What you are up to tomorrow?"
+                       TextWrapping="Wrap"
+                       Margin="3"/>
+                <TextBlock FontSize="17" 
+                       TextWrapping="Wrap"
+                       Text="Write fluently the events, meetings, or the tasks you want to acheive tomorrow. Make sure to seperate them with (,) or a new line"
+                       Margin="3"/>
+                <TextBlock FontSize="17" 
+                       TextWrapping="Wrap"
+                       Text="You can try by typing something like: 'I want to go to the super market, then I want to call John at 08 PM'"
+                       Margin="3"/>
+            </StackPanel>
+            <TextBox VerticalAlignment="Stretch" 
+                     TextWrapping="Wrap" 
+                     AcceptsReturn="True"
+                     IsSpellCheckEnabled="True"
+                    Grid.Row="1"
+                     FontSize="20"
+                     PlaceholderText="I want to buy fresh fruits. I will play football with the team at 08 PM. I want to call John to dicuss the release of our new project at 04:30 PM"
+                     Text="{x:Bind ViewModel.Note, Mode=TwoWay}"
+                     Margin="3, 10" />
+
+            <Button Content="Analyze"
+                    Visibility="{Binding IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}"
+                    Margin="3"
+                    Grid.Row="2"
+                    FontSize="16"
+                    Style="{ThemeResource AccentButtonStyle}"
+                    Command="{Binding AnalyzeNoteCommand}"
+                    HorizontalAlignment="Stretch"/>
+
+            <ProgressRing Grid.Row="2"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Width="25"
+                          Height="25"
+                          Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"
+                          IsActive="{Binding IsBusy}"/>
+        </Grid>
+
+        <Grid Grid.Column="1"
+              Visibility="{Binding IsPlanSubmitted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+            <TextBlock Style="{ThemeResource BaseTextBlockStyle}"
+                       Text="Submit your note to see if we are on the same page"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Margin="30, 0"
+                       TextWrapping="Wrap"
+                       HorizontalTextAlignment="Center" />
+        </Grid>
+
+
+        <Grid Grid.Column="1"
+              Padding="20"
+              Visibility="{Binding IsPlanSubmitted, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock FontSize="26" 
+                       Text="Here is what we got:"
+                       TextWrapping="Wrap"
+                       Margin="3"
+                       Grid.Row="0"/>
+
+            <ListView Grid.Row="1"
+                      Margin="3, 10"
+                      ItemsSource="{Binding Plan.Items}"
+                      SelectionMode="None"
+                      ItemTemplateSelector="{StaticResource PlanItemTemplateSelector}">
+
+            </ListView>
+
+            <Button Content="Looks good to me"
+                    Style="{ThemeResource AccentButtonStyle}"
+                    Command="{Binding SubmitPlanCommand}"
+                    Visibility="{Binding IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}"
+                    Margin="3"
+                    Grid.Row="2"
+                    FontSize="16"
+                    HorizontalAlignment="Stretch"/>
+
+            <ProgressRing Grid.Row="2"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Width="25"
+                          Height="25"
+                          Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"
+                          IsActive="{Binding IsBusy}"/>
+        </Grid>
+    </Grid>
+</Page>

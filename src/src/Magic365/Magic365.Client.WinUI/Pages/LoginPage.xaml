@@ -1,0 +1,57 @@
+<!-- Copyright (c) Microsoft Corporation and Contributors. -->
+<!-- Licensed under the MIT License. -->
+
+<Page
+    x:Class="Magic365.Client.WinUI.Pages.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Magic365.Client.WinUI.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+        <Image Source="ms-appx:///Assets/Square256x256Logo.png" Width="140"
+               Height="140" Margin="0, 10" />
+        <TextBlock Text="Welcome to Magic Note" 
+                   Style="{ThemeResource TitleTextBlockStyle}"
+                   Margin="5"/>
+        <TextBlock Text="#Hack_Together"
+                   HorizontalAlignment="Center"
+                   Style="{ThemeResource TitleTextBlockStyle}"
+                   Margin="10"/>
+        <TextBlock Text="Developed by Ahmad Mozaffar"
+                   HorizontalAlignment="Center"
+                   Style="{ThemeResource BodyTextBlockStyle}"
+                   Margin="0, 0, 0, 20"/>
+                   
+        <Button Width="250"
+                Padding="10"
+                HorizontalAlignment="Center"
+                Style="{ThemeResource ButtonRevealStyle}"
+                Command="{Binding SignInCommand}"
+                IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBoolConverter}}">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+                    <Image Width="23"
+                           VerticalAlignment="Center"
+                           Source="ms-appx:///Assets/Microsoft-Logo.png" />
+                    <TextBlock HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Margin="10, 0, 0, 3"
+                               Text="Login with Microsoft" />
+                </StackPanel>
+            </Button.Content>
+        </Button>
+
+        <ProgressRing Width="20"
+                      Height="20"
+                      Margin="0, 10"
+                      Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"
+                      IsActive="{Binding IsBusy}"
+                      HorizontalAlignment="Center" />
+
+    </StackPanel>
+</Page>
