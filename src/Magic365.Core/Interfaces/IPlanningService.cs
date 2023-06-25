@@ -11,10 +11,11 @@ namespace Magic365.Core.Interfaces
 	{
 
 		/// <summary>
-		/// Understand a note using AI and build a productivty plan out of it for user to review and fill the remaining data
+		/// Understand a note using AI and build a productivity plan out of it for user to review and fill the remaining data
 		/// </summary>
 		/// <param name="note">Note query request</param>
 		/// <returns></returns>
+		[Obsolete("The method is obsolete. Use AnalyzeNoteAsync instead within the interface INoteAnalyzeService.")]
 		Task<PlanDetails> AnalyzeNoteAsync(SubmitNoteRequest note);
 
 		/// <summary>
