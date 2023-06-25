@@ -18,7 +18,7 @@ namespace Magic365.Core.Models
 
         [JsonPropertyName("action")]
 		public string Action { get; set; }
-		[JsonPropertyName("action")]
+		[JsonPropertyName("type")]
 		public string Type { get; set; }
 		[JsonPropertyName("startTime")]
 		public string? StartTime { get; set; }

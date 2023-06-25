@@ -23,70 +23,69 @@ namespace Magic365.Core.Services
 	public class GraphPlanningService : IPlanningService
 	{
 
-		private readonly ILanguageUnderstandingService _language;
+		//private readonly ILanguageUnderstandingService _language;
 		private readonly GraphServiceClient _graph;
 		private readonly HttpClient _httpClient;
         private readonly ILogger<GraphPlanningService> _logger;
-        public GraphPlanningService(ILanguageUnderstandingService language,
-                                    GraphServiceClient graph,
+        public GraphPlanningService(GraphServiceClient graph,
                                     HttpClient httpClient,
                                     ILogger<GraphPlanningService> logger)
         {
-            _language = language;
             _graph = graph;
             _httpClient = httpClient;
             _logger = logger;
         }
-        #region Analyze Note 
-        /// <summary>
-        /// Understand a note using AI and build a productivty plan out of it for user to review and fill the remaining data
-        /// </summary>
-        /// <param name="note">Note query request</param>
-        /// <returns></returns>
-        public async Task<PlanDetails> AnalyzeNoteAsync(SubmitNoteRequest note)
+		#region Analyze Note 
+		/// <summary>
+		/// Understand a note using AI and build a productivity plan out of it for user to review and fill the remaining data
+		/// </summary>
+		/// <param name="note">Note query request</param>
+		/// <returns></returns>
+		[Obsolete("The method is obsolete. Use AnalyzeNoteAsync instead within the interface INoteAnalyzeService.")]
+		public Task<PlanDetails> AnalyzeNoteAsync(SubmitNoteRequest note)
 		{
-			var items = new List<PlanItem>();
+			//var items = new List<PlanItem>();
 
-			string[] sentences = PrepareSentences(note);
+			//string[] sentences = PrepareSentences(note);
 
-			foreach (var sentence in sentences)
+			//foreach (var sentence in sentences)
+			//{
+			//	//var analyzeResponse = await _language.AnalyzeTextAsync(sentence);
+			//	var analyzeResult = analyzeResponse.Result;
+			//	if (analyzeResult?.Prediction?.TopIntent?.Equals("None") ?? false)
+			//		continue;
+
+			//	PlanEntityType entityType = ExtractEntityType(analyzeResult);
+
+			//	switch (entityType)
+			//	{
+			//		case PlanEntityType.Event:
+			//			{
+			//				PlanItem planItem = ExtractEventItem(note, analyzeResult);
+			//				items.Add(planItem);
+			//				break;
+			//			}
+			//		case PlanEntityType.Meeting:
+			//			{
+			//				PlanItem planItem = await ExtractMeetingItem(note, analyzeResult);
+			//				items.Add(planItem);
+			//				break;
+			//			}
+			//		case PlanEntityType.ToDoItem:
+			//			{
+			//				PlanItem planItem = ExtractToDoItem(sentence, analyzeResult);
+			//				items.Add(planItem);
+			//				break;
+			//			}
+			//		default:
+			//			continue;
+			//	}
+			//}
+
+			return Task.FromResult(new PlanDetails
 			{
-				var analyzeResponse = await _language.AnalyzeTextAsync(sentence);
-				var analyzeResult = analyzeResponse.Result;
-				if (analyzeResult?.Prediction?.TopIntent?.Equals("None") ?? false)
-					continue;
-
-				PlanEntityType entityType = ExtractEntityType(analyzeResult);
-
-				switch (entityType)
-				{
-					case PlanEntityType.Event:
-						{
-							PlanItem planItem = ExtractEventItem(note, analyzeResult);
-							items.Add(planItem);
-							break;
-						}
-					case PlanEntityType.Meeting:
-						{
-							PlanItem planItem = await ExtractMeetingItem(note, analyzeResult);
-							items.Add(planItem);
-							break;
-						}
-					case PlanEntityType.ToDoItem:
-						{
-							PlanItem planItem = ExtractToDoItem(sentence, analyzeResult);
-							items.Add(planItem);
-							break;
-						}
-					default:
-						continue;
-				}
-			}
-
-			return new PlanDetails
-			{
-				Items = items
-			};
+				Items = Enumerable.Empty<PlanItem>()
+			});
 		}
 		#region Build To-Do Item 
 		/// <summary>
