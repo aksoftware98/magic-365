@@ -1,8 +1,8 @@
 {
   "profiles": {
-    "Magic365.AI.Functions": {
+    "Magic365_AI_Functions": {
       "commandName": "Project",
-      "commandLineArgs": "--port 7205",
+      "commandLineArgs": "--port 7230",
       "launchBrowser": false
     }
   }
