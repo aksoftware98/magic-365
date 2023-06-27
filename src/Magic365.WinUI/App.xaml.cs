@@ -1,4 +1,7 @@
-﻿using Magic365.WinUI.Activation;
+﻿using Magic365.Client.ViewModels;
+using Magic365.Client.ViewModels.Models;
+using Magic365.Client.ViewModels.ViewModels;
+using Magic365.WinUI.Activation;
 using Magic365.WinUI.Contracts.Services;
 using Magic365.WinUI.Core.Contracts.Services;
 using Magic365.WinUI.Core.Services;
@@ -42,6 +45,19 @@ public partial class App : Application
 
     public static UIElement? AppTitlebar { get; set; }
 
+    public static INavigationService NavigationService = null;
+    public static User User
+    {
+        get; private set;
+    }
+
+    public static event Action<User> OnUserLogsIn = delegate { };
+    public static void LoginUser(User user)
+    {
+        User = user;
+        OnUserLogsIn(user);
+    }
+
     public App()
     {
         InitializeComponent();
@@ -70,6 +86,9 @@ public partial class App : Application
 
             // Views and ViewModels
             services.AddTransient<MainViewModel>();
+            services.AddTransient<PlanningViewModel>();
+            services.AddTransient<LoginViewModel>();
+            services.AddTransient<PlanSubmittedViewModel>();
             services.AddTransient<MainPage>();
             services.AddTransient<ShellPage>();
             services.AddTransient<ShellViewModel>();
