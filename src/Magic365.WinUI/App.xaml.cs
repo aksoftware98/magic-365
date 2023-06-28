@@ -1,6 +1,7 @@
 ﻿using Magic365.Client.ViewModels;
 using Magic365.Client.ViewModels.Interfaces;
 using Magic365.Client.ViewModels.Models;
+using Magic365.Client.ViewModels.Services;
 using Magic365.Client.ViewModels.ViewModels;
 using Magic365.WinUI.Activation;
 using Magic365.WinUI.Contracts.Services;
@@ -84,6 +85,7 @@ public partial class App : Application
             services.AddSingleton<IWinUINavigationService, NavigationService>();
             services.AddSingleton<INavigationService>(sp => GetService<IWinUINavigationService>());
             services.AddSingleton<IAuthenticationProvider, AuthenticationService>();
+            services.AddSingleton<IPlanningClient, HttpPlanningClient>();
             // Core Services
             services.AddSingleton<IFileService, FileService>();
 

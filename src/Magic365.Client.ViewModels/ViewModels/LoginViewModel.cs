@@ -26,7 +26,11 @@ namespace Magic365.Client.ViewModels
 		}
 
 		public event Action<User> OnLoginUserSuccessfully = delegate { };
-
+        public static User? User
+        {
+            get; 
+            private set; 
+        }
 		[RelayCommand]
 		private async Task SignInAsync()
         {
@@ -35,6 +39,7 @@ namespace Magic365.Client.ViewModels
             {
                 var user = await _authProvider.SignInAsync();
                 OnLoginUserSuccessfully.Invoke(user);
+                User = user;
                 //_navigation.NavigateTo("PlanningPage");
 			}
 			catch (Exception ex)

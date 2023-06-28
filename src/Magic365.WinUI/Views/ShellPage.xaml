@@ -43,7 +43,7 @@
                 TODO: Update item icons by updating FontIcon.Glyph properties.
                 https://docs.microsoft.com/windows/apps/design/style/segoe-fluent-icons-font#icon-list
                 -->
-                <NavigationViewItem x:Uid="Shell_Main" helpers:NavigationHelper.NavigateTo="Magic365.WinUI.ViewModels.MainViewModel">
+                <NavigationViewItem x:Uid="Shell_Main" helpers:NavigationHelper.NavigateTo="Magic365.Client.ViewModels.PlanningViewModel">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;"/>
                     </NavigationViewItem.Icon>
