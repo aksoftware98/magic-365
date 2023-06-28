@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using Magic365.Client.ViewModels;
+using Magic365.Client.ViewModels.Interfaces;
 using Magic365.Client.ViewModels.Models;
-using Magic365.Client.WinUI.Services;
+using Magic365.WinUI.ViewModels;
+using Magic365.WinUI.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -31,12 +33,19 @@ namespace Magic365.WinUI.Pages
 	public sealed partial class LoginPage : Page
 	{
 		private readonly LoginViewModel _viewModel;
+        private readonly INavigationService _navigationService;
 		public LoginPage()
 		{
 			this.InitializeComponent();
 
             DataContext = _viewModel = App.GetService<LoginViewModel>();
+            _navigationService = App.GetService<INavigationService>();  
 			_viewModel.OnLoginUserSuccessfully += OnLoginUserSuccessfully;
+            App.OnUserLogsIn += delegate
+            {
+                var _shellPage = App.GetService<ShellPage>();
+                App.MainWindow.Content = _shellPage;
+            };
 		}
 
 		private void OnLoginUserSuccessfully(User user)

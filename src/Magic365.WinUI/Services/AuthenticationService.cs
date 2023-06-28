@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Magic365.Client.WinUI.Services
+namespace Magic365.WinUI.Services
 {
 	public class AuthenticationService : IAuthenticationProvider
 	{

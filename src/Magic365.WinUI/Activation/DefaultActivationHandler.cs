@@ -7,9 +7,9 @@ namespace Magic365.WinUI.Activation;
 
 public class DefaultActivationHandler : ActivationHandler<LaunchActivatedEventArgs>
 {
-    private readonly INavigationService _navigationService;
+    private readonly IWinUINavigationService _navigationService;
 
-    public DefaultActivationHandler(INavigationService navigationService)
+    public DefaultActivationHandler(IWinUINavigationService navigationService)
     {
         _navigationService = navigationService;
     }

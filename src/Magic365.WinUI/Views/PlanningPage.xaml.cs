@@ -3,7 +3,6 @@
 
 using Magic365.Client.ViewModels.Services;
 using Magic365.Client.ViewModels;
-using Microsoft.Graph.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -34,13 +33,8 @@ namespace Magic365.WinUI.Pages
 		public PlanningPage()
 		{
 			this.InitializeComponent();
-			DataContext = ViewModel = new PlanningViewModel(new HttpPlanningClient(),
-												App.User,
-												App.NavigationService,
-												new MessageDialogService(this));
+            DataContext = ViewModel = App.GetService<PlanningViewModel>();
 		}
-
-	
 
 	}
 	

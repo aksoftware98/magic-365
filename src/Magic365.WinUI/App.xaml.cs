@@ -1,4 +1,5 @@
 ﻿using Magic365.Client.ViewModels;
+using Magic365.Client.ViewModels.Interfaces;
 using Magic365.Client.ViewModels.Models;
 using Magic365.Client.ViewModels.ViewModels;
 using Magic365.WinUI.Activation;
@@ -7,6 +8,7 @@ using Magic365.WinUI.Core.Contracts.Services;
 using Magic365.WinUI.Core.Services;
 using Magic365.WinUI.Helpers;
 using Magic365.WinUI.Models;
+using Magic365.WinUI.Pages;
 using Magic365.WinUI.Services;
 using Magic365.WinUI.ViewModels;
 using Magic365.WinUI.Views;
@@ -45,7 +47,7 @@ public partial class App : Application
 
     public static UIElement? AppTitlebar { get; set; }
 
-    public static INavigationService NavigationService = null;
+    public static IWinUINavigationService NavigationService = null;
     public static User User
     {
         get; private set;
@@ -76,11 +78,12 @@ public partial class App : Application
             services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
             services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
             services.AddTransient<INavigationViewService, NavigationViewService>();
-
+            services.AddSingleton<IMessageDialogService, MessageDialogService>();
             services.AddSingleton<IActivationService, ActivationService>();
             services.AddSingleton<IPageService, PageService>();
-            services.AddSingleton<INavigationService, NavigationService>();
-
+            services.AddSingleton<IWinUINavigationService, NavigationService>();
+            services.AddSingleton<INavigationService>(sp => GetService<IWinUINavigationService>());
+            services.AddSingleton<IAuthenticationProvider, AuthenticationService>();
             // Core Services
             services.AddSingleton<IFileService, FileService>();
 
@@ -88,6 +91,7 @@ public partial class App : Application
             services.AddTransient<MainViewModel>();
             services.AddTransient<PlanningViewModel>();
             services.AddTransient<LoginViewModel>();
+            services.AddTransient<LoginPage>();
             services.AddTransient<PlanSubmittedViewModel>();
             services.AddTransient<MainPage>();
             services.AddTransient<ShellPage>();
@@ -95,6 +99,7 @@ public partial class App : Application
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
+
         }).
         Build();
 

@@ -15,6 +15,47 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Assets\Microsoft-Logo.png" />
+    <None Remove="Assets\Square142x142Logo.scale-200.png" />
+    <None Remove="Assets\Square150x150Logo.scale-100.png" />
+    <None Remove="Assets\Square150x150Logo.scale-125.png" />
+    <None Remove="Assets\Square150x150Logo.scale-150.png" />
+    <None Remove="Assets\Square150x150Logo.scale-400.png" />
+    <None Remove="Assets\Square176x176Logo.png" />
+    <None Remove="Assets\Square256x256Logo.png" />
+    <None Remove="Assets\Square310x310Logo.scale-100.png" />
+    <None Remove="Assets\Square310x310Logo.scale-125.png" />
+    <None Remove="Assets\Square310x310Logo.scale-150.png" />
+    <None Remove="Assets\Square310x310Logo.scale-200.png" />
+    <None Remove="Assets\Square310x310Logo.scale-400.png" />
+    <None Remove="Assets\Square44x44Logo.scale-400.png" />
+    <None Remove="Assets\Square44x44Logo.targetsize-16.png" />
+    <None Remove="Assets\Square44x44Logo.targetsize-20.png" />
+    <None Remove="Assets\Square44x44Logo.targetsize-24.png" />
+    <None Remove="Assets\Square44x44Logo.targetsize-256.png" />
+    <None Remove="Assets\Square44x44Logo.targetsize-256_altform-lightunplated.png" />
+    <None Remove="Assets\Square44x44Logo.targetsize-256_altform-unplated.png" />
+    <None Remove="Assets\Square44x44Logo.targetsize-30.png" />
+    <None Remove="Assets\Square44x44Logo.targetsize-32.png" />
+    <None Remove="Assets\Square44x44Logo.targetsize-36.png" />
+    <None Remove="Assets\Square44x44Logo.targetsize-40.png" />
+    <None Remove="Assets\Square44x44Logo.targetsize-48.png" />
+    <None Remove="Assets\Square44x44Logo.targetsize-60.png" />
+    <None Remove="Assets\Square44x44Logo.targetsize-64.png" />
+    <None Remove="Assets\Square44x44Logo.targetsize-72.png" />
+    <None Remove="Assets\Square44x44Logo.targetsize-80.png" />
+    <None Remove="Assets\Square44x44Logo.targetsize-96.png" />
+    <None Remove="Assets\Square620x620Logo.scale-200.png" />
+    <None Remove="Assets\Square71x71Logo.scale-100.png" />
+    <None Remove="Assets\Square71x71Logo.scale-125.png" />
+    <None Remove="Assets\Square71x71Logo.scale-150.png" />
+    <None Remove="Assets\Square71x71Logo.scale-200.png" />
+    <None Remove="Assets\Square71x71Logo.scale-400.png" />
+    <None Remove="Assets\Square96x96Logo.scale-400.png" />
+    <None Remove="Assets\StoreLogo.scale-150.png" />
+    <None Remove="Assets\StoreLogo.scale-300.png" />
+    <None Remove="Assets\StoreLogo.scale-71.png" />
+    <None Remove="Assets\Sun.png" />
     <None Remove="Controls\EventPlanDataTemplate.xaml" />
     <None Remove="Controls\MeetingPlanDataTemplate.xaml" />
     <None Remove="Controls\ToDoItemPlanDataTemplate.xaml" />
@@ -30,6 +71,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.50.0" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230502000" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageReference Include="WinUIEx" Version="2.2" />

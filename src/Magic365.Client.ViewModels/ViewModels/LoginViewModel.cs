@@ -32,12 +32,12 @@ namespace Magic365.Client.ViewModels
         {
 			IsBusy = true;
 			try
-			{
-				var user = await _authProvider.SignInAsync();
-				OnLoginUserSuccessfully.Invoke(user);
-				_navigation.NavigateTo("PlanningPage");
+            {
+                var user = await _authProvider.SignInAsync();
+                OnLoginUserSuccessfully.Invoke(user);
+                //_navigation.NavigateTo("PlanningPage");
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
 				// TODO: Log the error 
 				await _messageDialogService.ShowOkDialogAsync("Error", "An error occurred while trying to sign in. Please try again later.");

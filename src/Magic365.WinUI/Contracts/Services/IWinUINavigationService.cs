@@ -1,9 +1,10 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using Magic365.Client.ViewModels.Interfaces;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
 namespace Magic365.WinUI.Contracts.Services;
 
-public interface INavigationService
+public interface IWinUINavigationService : INavigationService
 {
     event NavigatedEventHandler Navigated;
 

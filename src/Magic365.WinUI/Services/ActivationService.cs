@@ -1,5 +1,6 @@
 ﻿using Magic365.WinUI.Activation;
 using Magic365.WinUI.Contracts.Services;
+using Magic365.WinUI.Pages;
 using Magic365.WinUI.Views;
 
 using Microsoft.UI.Xaml;
@@ -29,7 +30,7 @@ public class ActivationService : IActivationService
         // Set the MainWindow Content.
         if (App.MainWindow.Content == null)
         {
-            _shell = App.GetService<ShellPage>();
+            _shell = App.GetService<LoginPage>();
             App.MainWindow.Content = _shell ?? new Frame();
         }
 

@@ -33,7 +33,7 @@ namespace Magic365.WinUI.Pages
         public PlanSubmittedPage()
         {
             this.InitializeComponent();
-            DataContext = ViewModel = new PlanSubmittedViewModel(App.NavigationService);
+            DataContext = ViewModel = App.GetService<PlanSubmittedViewModel>();
         }
     }
 }

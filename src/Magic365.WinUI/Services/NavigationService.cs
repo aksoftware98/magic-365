@@ -11,7 +11,7 @@ namespace Magic365.WinUI.Services;
 
 // For more information on navigation between pages see
 // https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/navigation.md
-public class NavigationService : INavigationService
+public class NavigationService : IWinUINavigationService
 {
     private readonly IPageService _pageService;
     private object? _lastParameterUsed;
@@ -123,4 +123,6 @@ public class NavigationService : INavigationService
             Navigated?.Invoke(sender, e);
         }
     }
+
+    public void NavigateTo(string pageKey) => NavigateTo(pageKey, null, false);
 }
