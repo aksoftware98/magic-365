@@ -15,6 +15,8 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Assets\calendar_3d.png" />
+    <None Remove="Assets\check-icon.png" />
     <None Remove="Assets\Microsoft-Logo.png" />
     <None Remove="Assets\Square142x142Logo.scale-200.png" />
     <None Remove="Assets\Square150x150Logo.scale-100.png" />
@@ -56,6 +58,7 @@
     <None Remove="Assets\StoreLogo.scale-300.png" />
     <None Remove="Assets\StoreLogo.scale-71.png" />
     <None Remove="Assets\Sun.png" />
+    <None Remove="Assets\telephone_3d.png" />
     <None Remove="Controls\EventPlanDataTemplate.xaml" />
     <None Remove="Controls\MeetingPlanDataTemplate.xaml" />
     <None Remove="Controls\ToDoItemPlanDataTemplate.xaml" />

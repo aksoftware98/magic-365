@@ -21,22 +21,29 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <SymbolIcon 
-                                    Grid.RowSpan="2"
-                                    Width ="32"
-                                    Height="32"
-                                    Margin="6"
-                                    VerticalAlignment="Center"
-                                    HorizontalAlignment="Center"
-                                    Symbol="Phone"/>
-                <TextBlock Grid.Column="1"
+
+                <Border CornerRadius="3"
+                        Background="DeepSkyBlue"
+                        Grid.Column="0"
+                        Grid.RowSpan="3"
+                        Width="4"
+                        Margin="20, 4" />
+
+                <Image Source="ms-appx:///Assets/telephone_3d.png" 
+                       Grid.RowSpan="2"
+                          Width ="32"
+                            Height="32"
+                       Grid.Column="1" />
+                <TextBlock Grid.Column="2"
                                     Text="Meeting"
                                     Style="{ThemeResource BaseTextBlockStyle}"
                                     Margin="12,6,0,0"/>
 
-                <StackPanel Grid.Column="1"
+                <StackPanel Grid.Column="2"
                             Grid.Row="1">
                     <TextBlock 
                             Text="{Binding Title}"
@@ -60,7 +67,7 @@
 
                 <!-- Action Buttons -->
                 <StackPanel Orientation="Horizontal"
-                            Grid.Column="1"
+                            Grid.Column="2"
                             Grid.Row="0"
                             HorizontalAlignment="Right">
                     <Button Command="{Binding EditCommand}"
@@ -96,7 +103,7 @@
                     </Button>
                 </StackPanel>
 
-                <StackPanel Grid.ColumnSpan="2"
+                <StackPanel Grid.ColumnSpan="3"
                                             Grid.Row="2"
                                             Margin="0,0,0,4">
 

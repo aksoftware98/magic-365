@@ -35,8 +35,10 @@ namespace Magic365.Core.Models
 		{
 			get
 			{
-				if (string.IsNullOrWhiteSpace(StartDate) || string.IsNullOrWhiteSpace(StartTime))
-					return string.Empty;
+                if (string.IsNullOrWhiteSpace(StartDate))
+                    StartDate = DateTime.UtcNow.ToString("yyyy-MM-dd");
+                if (string.IsNullOrWhiteSpace(StartTime))
+                    StartTime = DateTime.UtcNow.ToString("HH:mm");
 
 				return $"{StartDate} {StartTime}";
 			}
@@ -46,10 +48,12 @@ namespace Magic365.Core.Models
 		{
 			get
 			{
-				if (string.IsNullOrWhiteSpace(EndDate) || string.IsNullOrWhiteSpace(EndTime))
-					return string.Empty;
+                if (string.IsNullOrWhiteSpace(EndDate))
+                    StartDate = DateTime.UtcNow.ToString("yyyy-MM-dd");
+                if (string.IsNullOrWhiteSpace(EndTime))
+                    StartTime = DateTime.UtcNow.ToString("HH:mm");
 
-				return $"{EndDate} {EndTime}";
+                return $"{EndDate} {EndTime}";
 			}
 		}
 	}

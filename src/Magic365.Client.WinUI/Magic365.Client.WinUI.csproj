@@ -23,10 +23,13 @@
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Assets\calendar_3d.png" />
+    <None Remove="Assets\check-icon.png" />
     <None Remove="Assets\Square142x142Logo.scale-200.png" />
     <None Remove="Assets\Square44x44Logo.scale-400.png" />
     <None Remove="Assets\Square620x620Logo.scale-200.png" />
     <None Remove="Assets\Square96x96Logo.scale-400.png" />
+    <None Remove="Assets\telephone_3d.png" />
     <None Remove="Controls\EventPlanDataTemplate.xaml" />
     <None Remove="Controls\MeetingPlanDataTemplate.xaml" />
     <None Remove="Controls\ToDoItemPlanDataTemplate.xaml" />

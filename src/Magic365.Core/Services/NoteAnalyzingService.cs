@@ -58,6 +58,10 @@ namespace Magic365.Core.Services
 				var items = new List<PlanItem>();
 				foreach (var planItem in analyzerResult)
 				{
+                    if ((planItem.StartDate == "null" || planItem.StartDate == null) && planItem.Type != "ToDoItem")
+                        planItem.StartDate = DateTime.UtcNow.Date.ToString("yyyy-MM-dd");  
+                    if ((planItem.EndDate == "null" || planItem.EndDate == null) && planItem.Type != "ToDoItem")
+                        planItem.EndDate = DateTime.UtcNow.Date.ToString("yyyy-MM-dd");
 					if (planItem.StartTime == null && planItem.EndTime == null)
 						planItem.Type = "ToDoItem";
 					switch (planItem.Type)

@@ -9,8 +9,10 @@
 
         <Border CornerRadius="10"
             Padding="5"
-            Margin="0, 10"
-            Background="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+            Margin="0, 4"
+            Background="{ThemeResource ControlFillColorInputActiveBrush}"    
+                BorderThickness="1"
+                BorderBrush="{ThemeResource ControlElevationBorderBrush}"
             HorizontalAlignment="Stretch">
 
             <Grid >
@@ -21,21 +23,29 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <SymbolIcon Grid.RowSpan="2"
-                            Width ="32"
+
+                <Border CornerRadius="3"
+                        Background="Green"
+                        Grid.Column="0"
+                        Grid.RowSpan="3"
+                        Width="4"
+                        Margin="20, 4" />
+
+                <Image Source="ms-appx:///Assets/check-icon.png" 
+                       Grid.RowSpan="2"
+                          Width ="32"
                             Height="32"
-                            Margin="6"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
-                            Symbol="Accept"/>
-                <TextBlock Grid.Column="1"
+                       Grid.Column="1" />
+                <TextBlock Grid.Column="3"
                            Text="To Do Task"
                            Style="{ThemeResource BaseTextBlockStyle}"
                            Margin="12,6,0,0"/>
 
-                <StackPanel Grid.Column="1"
+                <StackPanel Grid.Column="3"
                             Grid.Row="1">
                     <TextBlock 
                             Text="{Binding Title}"
@@ -57,7 +67,7 @@
                 </StackPanel>
                 <!-- Action Buttons -->
                 <StackPanel Orientation="Horizontal"
-                            Grid.Column="1"
+                            Grid.Column="3"
                             Grid.Row="0"
                             HorizontalAlignment="Right">
                     <Button Command="{Binding EditCommand}"
