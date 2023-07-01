@@ -9,7 +9,7 @@
 
         <Border CornerRadius="10"
             Padding="5"
-            Margin="0, 10"
+            Margin="0, 4"
             Background="{ThemeResource ControlFillColorInputActiveBrush}"
                 BorderThickness="1"
                 BorderBrush="{ThemeResource ControlElevationBorderBrush}"
@@ -165,8 +165,33 @@
                     </Grid>
 
                     <TextBlock Text="Participants"
-                                               Style="{ThemeResource BaseTextBlockStyle}"
-                                               Margin="12,6,0,0"/>
+                               Style="{ThemeResource BaseTextBlockStyle}"
+                               Margin="12,6,0,0"/>
+
+
+                    <TextBlock Text="Search existing contact or add a new participant"
+                               Style="{ThemeResource CaptionTextBlockStyle}"
+                               Margin="12,6,0,0"/>
+
+                    <StackPanel Orientation="Horizontal"
+                                Margin="12, 2">
+                        <AutoSuggestBox PlaceholderText="Search a contact"
+                                        QueryIcon="Find"
+                                        MinWidth="200"
+                                        Height="34"
+                                        />
+
+                        <Button Command="{Binding EditCommand}"
+                            Margin="3"
+                                Height="34"
+                            Visibility="{Binding IsEditMode, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                            <Viewbox Width="12"
+                             Height="12">
+                                <SymbolIcon Symbol="Add" />
+                            </Viewbox>
+                        </Button>
+                    </StackPanel>
+                    
 
                     <ListView SelectionMode="None"
                                               ItemsSource="{Binding Contacts}">
@@ -189,7 +214,7 @@
                                     <StackPanel Grid.Column="1"
                                                 VerticalAlignment="Center">
                                         <TextBlock  Text="{Binding DisplayName}"
-                                                    Style="{ThemeResource TextFillColorPrimaryBrush}"
+                                                    Style="{ThemeResource BodyStrongTextBlockStyle}"
                                                     Visibility="{Binding IsEditMode, Converter={StaticResource InverseBoolToVisibilityConverter}}"
                                                     Margin="12, 0"/>
 
