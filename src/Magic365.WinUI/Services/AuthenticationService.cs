@@ -13,7 +13,7 @@ namespace Magic365.WinUI.Services
 	public class AuthenticationService : IAuthenticationProvider
 	{
 
-
+        private readonly ILocalSettingsService _localSettings;
 		private static string[] Scopes = new string[] { "user.read", "Calendars.ReadWrite", "Tasks.ReadWrite", "Contacts.ReadWrite", "MailboxSettings.Read" };
 		private const string ClientId = "ec137e7d-ceb1-453a-bb59-65dc4be40822";
 		private const string Tenant = "common";
@@ -24,13 +24,18 @@ namespace Magic365.WinUI.Services
 
 		private static AuthenticationResult authResult;
 
+        public AuthenticationService(ILocalSettingsService localSettings)
+        {
+            _localSettings = localSettings;
+        }
 
-		/// <summary>
-		/// Signs in the user and obtains an access token for Microsoft Graph
-		/// </summary>
-		/// <param name="scopes"></param>
-		/// <returns> Access Token</returns>
-		public async Task<User> SignInAsync()
+
+        /// <summary>
+        /// Signs in the user and obtains an access token for Microsoft Graph
+        /// </summary>
+        /// <param name="scopes"></param>
+        /// <returns> Access Token</returns>
+        public async Task<User> SignInAsync()
 		{
 			// Initialize the MSAL library by building a public client application
 			PublicClientApp = PublicClientApplicationBuilder.Create(ClientId)
@@ -41,6 +46,8 @@ namespace Magic365.WinUI.Services
 					 Debug.WriteLine($"MSAL: {level} {message} ");
 				 }, LogLevel.Warning, enablePiiLogging: false, enableDefaultPlatformLogging: true)
 				.Build();
+
+            TokenCacheHelper.EnableSerialization(PublicClientApp.UserTokenCache);
 
 			// It's good practice to not do work on the UI thread, so use ConfigureAwait(false) whenever possible.
 			IEnumerable<IAccount> accounts = await PublicClientApp.GetAccountsAsync().ConfigureAwait(false);
@@ -64,6 +71,7 @@ namespace Magic365.WinUI.Services
 			{
 				throw;
 			}
+            await _localSettings.SaveSettingAsync("IsLoggedIn", true);
 			return new User(authResult.AccessToken, authResult.ClaimsPrincipal.FindFirst("name").Value, "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000");
 		}
 
@@ -79,6 +87,7 @@ namespace Magic365.WinUI.Services
 			{
 				await PublicClientApp.RemoveAsync(accounts.FirstOrDefault());
 				accounts = await PublicClientApp.GetAccountsAsync().ConfigureAwait(false);
+                await _localSettings.SaveSettingAsync("IsLoggedIn", false);
 			}
 		}
 

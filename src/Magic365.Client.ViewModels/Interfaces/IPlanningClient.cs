@@ -14,5 +14,7 @@ namespace Magic365.Client.ViewModels.Interfaces
 
 		Task SubmitPlanAsync(string? token, PlanDetails request);
 
+        Task<IEnumerable<MeetingPerson>> SearchContactAsync(string? token, string query);
+
 	}
 }

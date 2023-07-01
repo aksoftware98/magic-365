@@ -27,35 +27,47 @@ using Windows.Foundation.Collections;
 
 namespace Magic365.WinUI.Pages
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
-	public sealed partial class LoginPage : Page
-	{
-		private readonly LoginViewModel _viewModel;
+    /// <summary>
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class LoginPage : Page
+    {
+        private readonly LoginViewModel _viewModel;
         private readonly INavigationService _navigationService;
-		public LoginPage()
-		{
-			this.InitializeComponent();
-
+        private readonly ILocalSettingsService _localSettingsService;
+        public LoginPage()
+        {
+            this.InitializeComponent();
+            Loaded += LoginPage_Loaded;
             DataContext = _viewModel = App.GetService<LoginViewModel>();
-            _navigationService = App.GetService<INavigationService>();  
-			_viewModel.OnLoginUserSuccessfully += OnLoginUserSuccessfully;
+            _navigationService = App.GetService<INavigationService>();
+            _localSettingsService = App.GetService<ILocalSettingsService>();
+            _viewModel.OnLoginUserSuccessfully += OnLoginUserSuccessfully;
             App.OnUserLogsIn += delegate
             {
                 var _shellPage = App.GetService<ShellPage>();
                 App.MainWindow.Content = _shellPage;
             };
-		}
+        }
 
-		private void OnLoginUserSuccessfully(User user)
-		{
-			App.LoginUser(user);
-		}
+        private async void LoginPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            var result = await _localSettingsService.ReadSettingAsync<bool>("IsLoggedIn");
+            if (result)
+            {
+                await _viewModel.SignInCommand.ExecuteAsync(null);
+            }
+        }
 
-		protected override void OnNavigatedFrom(NavigationEventArgs e)
-		{
-			_viewModel.OnLoginUserSuccessfully -= OnLoginUserSuccessfully;
-		}
-	}
+        private void OnLoginUserSuccessfully(User user)
+        {
+            App.LoginUser(user);
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            Loaded -= LoginPage_Loaded;
+            _viewModel.OnLoginUserSuccessfully -= OnLoginUserSuccessfully;
+        }
+    }
 }

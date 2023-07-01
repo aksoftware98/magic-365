@@ -65,6 +65,15 @@ app.MapPost("/submit-plan", async ([FromBody] PlanDetails plan, IPlanningService
 	.WithName("Submit Plan")
 	.WithDescription("Submit a plan so the planned items inside it can be created via the Microsoft Graph")
 	.WithOpenApi();
+
+app.MapPost("/contacts/search", async ([FromQuery] string query, IPlanningService planningService) =>
+{
+    var result = await planningService.FetchContactsAsync(query);
+    return Results.Ok(result);
+})
+    .WithName("Search contacts")
+    .WithDescription("Search the contacts of the user using Microsoft Graph")
+    .WithOpenApi();
 #endregion 
 
 app.Run();

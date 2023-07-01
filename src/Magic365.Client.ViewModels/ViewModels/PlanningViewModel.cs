@@ -98,6 +98,26 @@ namespace Magic365.Client.ViewModels
 
         }
 
+        public async Task<IEnumerable<MeetingPerson>> SearchContactAsync(string query)
+        {
+            try
+            {
+                return await _planningClient.SearchContactAsync(_user.AccessToken, query);
+            }
+            catch (ApiException ex)
+            {
+                // TODO: Log the error
+                await _dialogsService.ShowOkDialogAsync("Error", ex.Message);
+                return Enumerable.Empty<MeetingPerson>();
+            }
+            catch (Exception)
+            {
+                // TODO: Log the error 
+                await _dialogsService.ShowOkDialogAsync("Error", "An error occurred while submitting the plan. Please try again later.");
+                return Enumerable.Empty<MeetingPerson>();
+            }
+        }
+
         private PlanDetails BuildRequestObject()
         {
             return new()

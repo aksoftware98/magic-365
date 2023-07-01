@@ -168,7 +168,6 @@
                                Style="{ThemeResource BaseTextBlockStyle}"
                                Margin="12,6,0,0"/>
 
-
                     <TextBlock Text="Search existing contact or add a new participant"
                                Style="{ThemeResource CaptionTextBlockStyle}"
                                Margin="12,6,0,0"/>
@@ -179,6 +178,8 @@
                                         QueryIcon="Find"
                                         MinWidth="200"
                                         Height="34"
+                                        x:Name="AutoSuggestContacts"
+                                        ItemsSource="{Binding Contacts}"
                                         />
 
                         <Button Command="{Binding EditCommand}"
@@ -192,7 +193,6 @@
                         </Button>
                     </StackPanel>
                     
-
                     <ListView SelectionMode="None"
                                               ItemsSource="{Binding Contacts}">
                         <ListView.ItemTemplate>

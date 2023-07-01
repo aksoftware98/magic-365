@@ -50,7 +50,28 @@ namespace Magic365.Client.ViewModels.Services
 			}
 		}
 
-		public async Task SubmitPlanAsync(string? token, PlanDetails request)
+        public async Task<IEnumerable<MeetingPerson>> SearchContactAsync(string token, string query)
+        {
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            var response = await client.GetAsync($"{BaseUrl}/contacts/search?query={query}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<IEnumerable<MeetingPerson>>();
+                return result ?? Enumerable.Empty<MeetingPerson>();
+            }
+            else
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                Debug.WriteLine(content);
+                var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+                throw new ApiException(error);
+            }
+        }
+
+        public async Task SubmitPlanAsync(string? token, PlanDetails request)
 		{
 
 			using var client = new HttpClient();

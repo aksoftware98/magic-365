@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace Magic365.Core.Services
 {
-	public class GraphPlanningService : IPlanningService
+    public class GraphPlanningService : IPlanningService
 	{
 
 		//private readonly ILanguageUnderstandingService _language;
@@ -539,8 +539,28 @@ namespace Magic365.Core.Services
 			
 		}
 
-		#endregion
-	}
+
+        #endregion
+
+        public async Task<IEnumerable<MeetingPerson>> FetchContactsAsync(string query)
+        {
+            var contacts = await _graph
+                                    .Me
+                                    .Contacts
+                                    .GetAsync(config =>
+                                    {
+                                        config.QueryParameters.Filter = $"contains(displayName, '{query}')";
+                                        config.QueryParameters.Select = new[] { "id", "displayName", "emailAddresses" };
+                                    });
+
+            return contacts?.Value?.Select(c => new MeetingPerson
+            {
+            
+                           Name = c.DisplayName,
+                           Email = c.EmailAddresses?.FirstOrDefault()?.Address
+            }) ?? Enumerable.Empty<MeetingPerson>();
+        }
+    }
 
 	internal class TimeZoneResponse
 	{

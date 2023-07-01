@@ -1,4 +1,5 @@
-﻿using Magic365.WinUI.Contracts.Services;
+﻿using Magic365.Client.ViewModels.Interfaces;
+using Magic365.WinUI.Contracts.Services;
 using Magic365.WinUI.Core.Contracts.Services;
 using Magic365.WinUI.Core.Helpers;
 using Magic365.WinUI.Helpers;
