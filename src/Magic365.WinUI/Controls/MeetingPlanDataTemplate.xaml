@@ -197,10 +197,9 @@
                             </interactivity:Interaction.Behaviors>
                         </AutoSuggestBox>
 
-                        <Button Command="{Binding EditCommand}"
+                        <Button Command="{Binding AddNewContactCommand}"
                             Margin="3"
-                                Height="34"
-                            Visibility="{Binding IsEditMode, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                                Height="34">
                             <Viewbox Width="12"
                              Height="12">
                                 <SymbolIcon Symbol="Add" />

@@ -181,7 +181,16 @@ namespace Magic365.Client.ViewModels
                 var result = await _parentViewModel.SearchContactsAsync(args.Query ?? string.Empty);
                 MyContacts = new(result);
             }
+        }
 
+        [RelayCommand]
+        private void AddNewContact()
+        {
+            Contacts.Add(new(new MeetingPerson(), DeleteContact)
+            {
+                IsNewContact = true,
+                IsEditMode = true,
+            });
         }
 
 
