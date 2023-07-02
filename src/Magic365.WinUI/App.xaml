@@ -20,6 +20,7 @@
             <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
             <converters:DateTimeToTimeSpanConverter x:Key="DateTimeToTimespanConverter" />
             <converters:DateTimeToTimeStringConverter x:Key="DateTimeToTimeStringConverter" />
+            <converters:DateTimeToDateStringConverter x:Key="DateTimeToDateStringConverter" />
             <converters:EmptyEmailToStringConverter x:Key="EmptyEmailToStringConverter" />
             <converters:EmptyStringToVisibilityConverter x:Key="EmptyStringToVisibilityConverter" />
         </ResourceDictionary>

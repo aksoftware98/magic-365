@@ -123,6 +123,8 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Style="{ThemeResource BodyTextBlockStyle}"
                                                    Text="Start time:"
@@ -167,6 +169,52 @@
                                     IsEnabled="{Binding IsEditMode}"
                                     Grid.Column="1"
                                      Visibility="{Binding IsEditMode, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+                        <!-- Date Periods -->
+                        <TextBlock Style="{ThemeResource BodyTextBlockStyle}"
+                                                   Text="Start date:"
+                                                   VerticalAlignment="Center"
+                                                    Grid.Row="0"
+                                                   Grid.Column="2"/>
+
+                        <TextBlock Style="{ThemeResource BodyStrongTextBlockStyle}"
+                                   Text="{Binding StartDate, Converter={StaticResource DateTimeToDateStringConverter}}"
+                                   Visibility="{Binding IsEditMode, Converter={StaticResource InverseBoolToVisibilityConverter}}"
+                                   VerticalAlignment="Center"
+                                   Grid.Row="0"
+                                   Grid.Column="3"
+                                   Margin="20, 5"/>
+
+                        <DatePicker Margin="5, 5"
+                                    VerticalAlignment="Center"
+                                    SelectedDate="{Binding StartDate, Mode=TwoWay}"
+                                    Visibility="{Binding IsEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                                    Grid.Row="0"
+                                    IsEnabled="{Binding IsEditMode}"
+                                    Grid.Column="3"/>
+                        <TextBlock Style="{ThemeResource BodyTextBlockStyle}"
+                                   Text="End date:"
+                                   VerticalAlignment="Center" 
+                                   Grid.Row="1"
+                                   Grid.Column="2"/>
+
+
+                        <TextBlock Style="{ThemeResource BodyStrongTextBlockStyle}"
+                                   Text="{Binding EndDate, Converter={StaticResource DateTimeToDateStringConverter}}"
+                                    Visibility="{Binding IsEditMode, Converter={StaticResource InverseBoolToVisibilityConverter}}"
+                                   Margin="20, 5"
+                                   VerticalAlignment="Center"
+                                   Grid.Row="1"
+                                   Grid.Column="3"/>
+
+                        <DatePicker Margin="5, 5"
+                                    VerticalAlignment="Center"
+                                    SelectedDate="{Binding StartDate, Mode=TwoWay}"
+                                    Grid.Row="1"
+                                    IsEnabled="{Binding IsEditMode}"
+                                    Grid.Column="3"
+                                     Visibility="{Binding IsEditMode, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
                     </Grid>
 
                     <TextBlock Text="Participants"

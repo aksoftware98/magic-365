@@ -23,6 +23,13 @@ namespace Magic365.Client.ViewModels
         private DateTime? _endTime;
 
         [ObservableProperty]
+        private DateTime? _startDate;
+
+        [ObservableProperty]
+        private DateTime? _endDate;
+
+
+        [ObservableProperty]
         private ObservableCollection<ContactViewModel>? _contacts = new();
 
         [ObservableProperty]
@@ -109,6 +116,8 @@ namespace Magic365.Client.ViewModels
             Title = item.Title;
             StartTime = item.StartTime;
             EndTime = item.EndTime;
+            StartDate = item.StartTime?.Date;
+            EndDate = item.EndTime?.Date;
             Contacts = item.People == null ? null : new(item.People.Select(p => new ContactViewModel(p, DeleteContact)));
             Type = item.Type;
             _parentViewModel = parent;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Magic365.WinUI.Converters
 {
-	public class DateTimeToTimeStringConverter : IValueConverter
+    public class DateTimeToTimeStringConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
