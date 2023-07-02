@@ -35,7 +35,7 @@
             ExpandedModeThresholdWidth="1280"
             DisplayModeChanged="NavigationViewControl_DisplayModeChanged">
             <NavigationView.FooterMenuItems>
-                <NavigationViewItem helpers:NavigationHelper.NavigateTo="Magic365.Client.ViewModels.PlanningViewModel">
+                <NavigationViewItem helpers:NavigationHelper.NavigateTo="Magic365.WinUI.ViewModels.SettingsViewModel">
                     <NavigationViewItem.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Assets/gear_3d.png" Width="32" Height="32" 

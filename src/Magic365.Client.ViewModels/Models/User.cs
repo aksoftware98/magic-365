@@ -9,11 +9,12 @@ namespace Magic365.Client.ViewModels.Models
 	public class User
 	{
 
-        public User(string token, string fullName, string profilePicture)
+        public User(string token, string fullName, string profilePicture, string email)
         {
 			AccessToken = token;
 			FullName = fullName;
-			ProfilePicture = profilePicture; 
+			ProfilePicture = profilePicture;
+            Email = email;
         }
 
         public string AccessToken { get; set; }
@@ -21,6 +22,11 @@ namespace Magic365.Client.ViewModels.Models
 		public string FullName { get; set; }
 
 		public string ProfilePicture { get; set; }
+
+        public string Email
+        {
+            get; set;
+        }
 
 	}
 }

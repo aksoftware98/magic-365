@@ -20,16 +20,25 @@
                                                ToDoItemPlanTemplate="{StaticResource ToDoItemPlanDataTemplate}"/>
     </Page.Resources>
 
-    <Grid>
+    <Grid x:Name="ContentArea">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <TextBlock Style="{ThemeResource HeaderTextBlockStyle}"
+                   Text="The Planner"
+                   Margin="20" />
+
         <!-- Text input side -->
         <Grid Grid.Column="0"
+              Grid.Row="1"
               Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
-              Padding="20">
+              Padding="20, 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*" />
@@ -37,16 +46,12 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
                 <TextBlock FontSize="26" 
-                       Text="Hey! What you are up to tomorrow?"
+                       Text="Hey! What you are up to?"
                        TextWrapping="Wrap"
                        Margin="3"/>
                 <TextBlock FontSize="17" 
                        TextWrapping="Wrap"
-                       Text="Write fluently the events, meetings, or the tasks you want to acheive tomorrow. Make sure to seperate them with (,) or a new line"
-                       Margin="3"/>
-                <TextBlock FontSize="17" 
-                       TextWrapping="Wrap"
-                       Text="You can try by typing something like: 'I want to go to the super market, then I want to call John at 08 PM'"
+                       Text="Write fluently the events, meetings, or the tasks you want to acheive"
                        Margin="3"/>
             </StackPanel>
             <TextBox VerticalAlignment="Stretch" 
@@ -78,6 +83,7 @@
         </Grid>
 
         <Grid Grid.Column="1"
+               Grid.Row="1"
               Visibility="{Binding IsPlanSubmitted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
             <TextBlock Style="{ThemeResource BaseTextBlockStyle}"
                        Text="Submit your note to see if we are on the same page"
@@ -91,6 +97,7 @@
 
         <Grid Grid.Column="1"
               Padding="20"
+               Grid.Row="1"
               Visibility="{Binding IsPlanSubmitted, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>

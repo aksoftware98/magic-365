@@ -19,9 +19,11 @@
     <None Remove="Assets\calendar_3d.png" />
     <None Remove="Assets\check-icon.png" />
     <None Remove="Assets\check_mark_button_3d.png" />
+    <None Remove="Assets\envelope_3d.png" />
     <None Remove="Assets\gear_3d.png" />
     <None Remove="Assets\house_3d.png" />
     <None Remove="Assets\Microsoft-Logo.png" />
+    <None Remove="Assets\paintbrush_3d.png" />
     <None Remove="Assets\Square142x142Logo.scale-200.png" />
     <None Remove="Assets\Square150x150Logo.scale-100.png" />
     <None Remove="Assets\Square150x150Logo.scale-125.png" />

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+
 using Magic365.Client.ViewModels;
 using Magic365.WinUI.Contracts.Services;
 using Magic365.WinUI.Pages;
@@ -17,6 +18,7 @@ public class PageService : IPageService
     {
         Configure<MainViewModel, MainPage>();
         Configure<PlanningViewModel, PlanningPage>();
+        Configure<SettingsViewModel, SettingsPage>();
     }
 
     public Type GetPageType(string key)
