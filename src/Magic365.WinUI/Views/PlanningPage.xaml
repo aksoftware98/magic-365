@@ -31,14 +31,14 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Style="{ThemeResource HeaderTextBlockStyle}"
-                   Text="The Planner"
+                   Text="Planner"
                    Margin="20" />
 
         <!-- Text input side -->
         <Grid Grid.Column="0"
               Grid.Row="1"
               Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
-              Padding="20, 0">
+              Padding="20, 0, 20, 20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*" />

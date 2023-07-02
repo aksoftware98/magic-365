@@ -51,7 +51,7 @@ namespace Magic365.Client.ViewModels
             {
                 IsBusy = true;
                 var plan = await _planningClient.AnalyzeNoteAsync(_user.AccessToken, Note);
-                Plan = new(plan);
+                Plan = new(plan, _planningClient);
 
                 IsPlanSubmitted = true;
             }

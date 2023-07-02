@@ -12,11 +12,9 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-
         <TextBlock Style="{ThemeResource HeaderTextBlockStyle}"
                    Text="Settings"
                    Margin="20" />
-
 
         <StackPanel MaxWidth="1200"
                 MinWidth="900"
