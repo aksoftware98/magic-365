@@ -54,7 +54,7 @@
                 TODO: Update item icons by updating FontIcon.Glyph properties.
                 https://docs.microsoft.com/windows/apps/design/style/segoe-fluent-icons-font#icon-list
                 -->
-                <NavigationViewItem helpers:NavigationHelper.NavigateTo="Magic365.Client.ViewModels.PlanningViewModel">
+                <NavigationViewItem helpers:NavigationHelper.NavigateTo="Magic365.Client.ViewModels.HomeViewModel">
                     <NavigationViewItem.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Assets/house_3d.png" Width="32" Height="32" 

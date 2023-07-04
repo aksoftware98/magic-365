@@ -4,6 +4,7 @@ namespace Magic365.WinUI.Converters
 {
     public class DateTimeToDateStringConverter : IValueConverter
     {
+        
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             var timeValue = (DateTime?)value;

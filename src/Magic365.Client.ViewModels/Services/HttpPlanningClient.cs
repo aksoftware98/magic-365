@@ -23,7 +23,7 @@ namespace Magic365.Client.ViewModels.Services
 		/* UNCOMMENT THIS FOR LOCAL TESTING */
 		private const string BaseUrl = "https://localhost:7210";
 
-		public async Task<PlanDetails> AnalyzeNoteAsync(string token, string note)
+		public async Task<PlanDetails> AnalyzeNoteAsync(string? token, string? note)
 		{
 			if (string.IsNullOrWhiteSpace(note))
 				throw new ArgumentNullException(nameof(note));
@@ -43,12 +43,50 @@ namespace Magic365.Client.ViewModels.Services
 			}
 			else
 			{
-				var content = await response.Content.ReadAsStringAsync();
-				Debug.WriteLine(content);
 				var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
 				throw new ApiException(error);
 			}
 		}
+
+        public async Task<IEnumerable<ToDoItemDto>> ListUndoneToDoTasksAsync(string? token)
+        {
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            var response = await client.GetAsync($"{BaseUrl}/tasks/list");
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<IEnumerable<ToDoItemDto>>();
+                return result ?? Enumerable.Empty<ToDoItemDto>();
+            }
+            else
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                Debug.WriteLine(content);
+                var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+                throw new ApiException(error);
+            }
+        }
+
+        public async Task<IEnumerable<CalendarEventDto>> ListUpcomingCalendarEventsAsync(string? token)
+        {
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            var response = await client.GetAsync($"{BaseUrl}/events/list");
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<IEnumerable<CalendarEventDto>>();
+                return result ?? Enumerable.Empty<CalendarEventDto>();
+            }
+            else
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                Debug.WriteLine(content);
+                var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+                throw new ApiException(error);
+            }
+        }
 
         public async Task<IEnumerable<MeetingPerson>> SearchContactAsync(string token, string query)
         {

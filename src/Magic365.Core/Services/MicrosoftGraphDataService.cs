@@ -74,6 +74,7 @@ public class MicrosoftGraphDataService : IGraphDataService
                                .GetAsync(options =>
                                {
                                    options.QueryParameters.Top = 5;
+                                   options.QueryParameters.Filter = "start/dateTime ge '" + DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ") + "'";
                                    options.QueryParameters.Orderby = new[] { "start/dateTime" };
                                });
 

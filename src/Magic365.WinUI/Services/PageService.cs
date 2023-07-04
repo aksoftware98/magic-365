@@ -19,6 +19,7 @@ public class PageService : IPageService
         Configure<MainViewModel, MainPage>();
         Configure<PlanningViewModel, PlanningPage>();
         Configure<SettingsViewModel, SettingsPage>();
+        Configure<HomeViewModel, HomePage>();
     }
 
     public Type GetPageType(string key)
