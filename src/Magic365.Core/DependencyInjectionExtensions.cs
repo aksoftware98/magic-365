@@ -26,7 +26,8 @@ namespace Magic365.Core
 		{
 			return services.AddAnalyzerFunctionOptions(config)
 				.AddPlanningService()
-				.AddScoped<INoteAnalyzingService, NoteAnalyzingService>();
+				.AddScoped<INoteAnalyzingService, NoteAnalyzingService>()
+                .AddScoped<IGraphDataService, MicrosoftGraphDataService>();
 		}
 
 		public static IServiceCollection AddAnalyzerFunctionOptions(this IServiceCollection services, IConfiguration config)

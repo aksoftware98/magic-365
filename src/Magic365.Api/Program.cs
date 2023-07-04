@@ -74,6 +74,25 @@ app.MapGet("/contacts/search", async ([FromQuery] string query, IPlanningService
     .WithName("Search contacts")
     .WithDescription("Search the contacts of the user using Microsoft Graph")
     .WithOpenApi();
+
+
+app.MapGet("/tasks/list", async (IGraphDataService planningService) =>
+{
+    var result = await planningService.GetLastTasksAsync();
+    return Results.Ok(result);
+})
+    .WithName("List pending tasks")
+    .WithDescription("Retrieve 5 pending tasks from the 'Tasks' list in Microsoft To Do")
+    .WithOpenApi();
+
+app.MapGet("/events/list", async (IGraphDataService planningService) =>
+{
+    var result = await planningService.GetUpcomingEventsAsync();
+    return Results.Ok(result);
+})
+    .WithName("List upcoming calendar events")
+    .WithDescription("Retrieve the upcoming 5 calendar events")
+    .WithOpenApi();
 #endregion 
 
 app.Run();
