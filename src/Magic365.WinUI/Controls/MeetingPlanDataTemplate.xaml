@@ -15,6 +15,7 @@
         <Border CornerRadius="10"
             Padding="5"
             Margin="0, 4"
+                MinWidth="400"
             Background="{ThemeResource ControlFillColorInputActiveBrush}"
                 BorderThickness="1"
                 BorderBrush="{ThemeResource ControlElevationBorderBrush}"
@@ -122,9 +123,9 @@
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Style="{ThemeResource BodyTextBlockStyle}"
                                                    Text="Start time:"
@@ -140,7 +141,7 @@
                                    Grid.Column="1"
                                    Margin="20, 5"/>
 
-                        <TimePicker Margin="5, 5"
+                        <TimePicker Margin="20, 5"
                                     VerticalAlignment="Center"
                                     SelectedTime="{Binding StartTime, Converter={StaticResource DateTimeToTimespanConverter}, Mode=TwoWay}"
                                     Visibility="{Binding IsEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
@@ -162,7 +163,7 @@
                                    Grid.Row="1"
                                    Grid.Column="1"/>
 
-                        <TimePicker Margin="5, 5"
+                        <TimePicker Margin="20, 5"
                                     VerticalAlignment="Center"
                                     SelectedTime="{Binding EndTime, Converter={StaticResource DateTimeToTimespanConverter}, Mode=TwoWay}" 
                                     Grid.Row="1"
@@ -185,9 +186,9 @@
                                    Grid.Column="3"
                                    Margin="20, 5"/>
 
-                        <DatePicker Margin="5, 5"
+                        <CalendarDatePicker Margin="20, 5"
                                     VerticalAlignment="Center"
-                                    SelectedDate="{Binding StartDate, Mode=TwoWay}"
+                                    Date="{Binding StartDate, Converter={StaticResource DateTimeToDateSpanConverter}, Mode=TwoWay}"
                                     Visibility="{Binding IsEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
                                     Grid.Row="0"
                                     IsEnabled="{Binding IsEditMode}"
@@ -198,7 +199,6 @@
                                    Grid.Row="1"
                                    Grid.Column="2"/>
 
-
                         <TextBlock Style="{ThemeResource BodyStrongTextBlockStyle}"
                                    Text="{Binding EndDate, Converter={StaticResource DateTimeToDateStringConverter}}"
                                     Visibility="{Binding IsEditMode, Converter={StaticResource InverseBoolToVisibilityConverter}}"
@@ -207,9 +207,9 @@
                                    Grid.Row="1"
                                    Grid.Column="3"/>
 
-                        <DatePicker Margin="5, 5"
+                        <CalendarDatePicker Margin="20, 5"
                                     VerticalAlignment="Center"
-                                    SelectedDate="{Binding StartDate, Mode=TwoWay}"
+                                    Date="{Binding EndDate, Converter={StaticResource DateTimeToDateSpanConverter}, Mode=TwoWay}"
                                     Grid.Row="1"
                                     IsEnabled="{Binding IsEditMode}"
                                     Grid.Column="3"

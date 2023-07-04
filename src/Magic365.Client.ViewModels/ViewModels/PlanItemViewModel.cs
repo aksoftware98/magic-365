@@ -41,6 +41,32 @@ namespace Magic365.Client.ViewModels
         [ObservableProperty]
         private string _errorMessage = string.Empty;
 
+        public DateTime? StartDateTime
+        {
+            get
+            {
+                if (StartDate == null || StartTime == null)
+                {
+                    return null;
+                }
+
+                return new DateTime(StartDate.Value.Year, StartDate.Value.Month, StartDate.Value.Day, StartTime.Value.Hour, StartTime.Value.Minute, StartTime.Value.Second);
+            }
+        }
+
+        public DateTime? EndDateTime
+        {
+            get
+            {
+                if (EndDate == null || EndTime == null)
+                {
+                    return null;
+                }
+
+                return new DateTime(EndDate.Value.Year, EndDate.Value.Month, EndDate.Value.Day, EndTime.Value.Hour, EndTime.Value.Minute, EndTime.Value.Second);
+            }
+        }
+
         public Action<string> DeleteItemAction
         {
             get; set;
@@ -72,6 +98,7 @@ namespace Magic365.Client.ViewModels
             }
             ErrorMessage = string.Empty;
             IsEditMode = false;
+
         }
 
         [RelayCommand]
@@ -138,6 +165,14 @@ namespace Magic365.Client.ViewModels
                 if (endTimeOnly <= startTimeOnly)
                 {
                     ErrorMessage = "End time must be greater than start time";
+                    return false;
+                }
+
+                var startDateOnly = DateOnly.FromDateTime(StartDate.Value);
+                var endDateOnly = DateOnly.FromDateTime(EndDate.Value);
+                if (startDateOnly > endDateOnly)
+                {
+                    ErrorMessage = "End date must be greater than start date";
                     return false;
                 }
             }

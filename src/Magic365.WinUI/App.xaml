@@ -19,6 +19,7 @@
             <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
             <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
             <converters:DateTimeToTimeSpanConverter x:Key="DateTimeToTimespanConverter" />
+            <converters:DateTimeToDateTimeSpanConverter x:Key="DateTimeToDateSpanConverter" />
             <converters:DateTimeToTimeStringConverter x:Key="DateTimeToTimeStringConverter" />
             <converters:DateTimeToDateStringConverter x:Key="DateTimeToDateStringConverter" />
             <converters:EmptyEmailToStringConverter x:Key="EmptyEmailToStringConverter" />

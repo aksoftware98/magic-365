@@ -125,8 +125,8 @@ namespace Magic365.Client.ViewModels
                 Items = Plan.Items.Select(p => new PlanItem
                 {
                     Type = p.Type,
-                    EndTime = p.EndTime,
-                    StartTime = p.StartTime,
+                    EndTime = p.EndDateTime,
+                    StartTime = p.StartDateTime,
                     Title = p.Title,
                     People = p.Contacts?.Select(c => new MeetingPerson()
                     {

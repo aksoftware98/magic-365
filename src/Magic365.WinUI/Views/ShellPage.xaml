@@ -32,7 +32,8 @@
             IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
             SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
             IsSettingsVisible="False"
-            ExpandedModeThresholdWidth="1280"
+            OverflowLabelMode="MoreLabel"
+            ExpandedModeThresholdWidth="1600"
             DisplayModeChanged="NavigationViewControl_DisplayModeChanged">
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem helpers:NavigationHelper.NavigateTo="Magic365.WinUI.ViewModels.SettingsViewModel">
