@@ -16,22 +16,47 @@ public partial class HomeViewModel : ObservableObject
 
     private readonly IPlanningClient _planningClient;
     private readonly IMessageDialogService _dialogService;
-    public HomeViewModel(IPlanningClient planningClient, 
-                         IMessageDialogService dialogService)
+    private readonly ILocalSettingsService _localSettingsService;
+    private readonly INavigationService _navigationService;
+    public HomeViewModel(IPlanningClient planningClient,
+                         IMessageDialogService dialogService,
+                         ILocalSettingsService localSettingsService,
+                         INavigationService navigationService)
     {
 
         _planningClient = planningClient;
         _dialogService = dialogService;
+        _localSettingsService = localSettingsService;
+        _navigationService = navigationService;
+
+        var isHintSaved = _localSettingsService.ReadSetting("Show_Hint_In_Dashboard").Result;
+        IsHintVisible = isHintSaved != null;
     }
 
     [ObservableProperty]
     private bool _isBusy = false;
 
     [ObservableProperty]
+    private bool _isHintVisible = true;
+
+    [ObservableProperty]
     private ObservableCollection<ToDoItemDto> _toDoItems = new();
 
     [ObservableProperty]
     private ObservableCollection<CalendarEventDto> _calendarEvents = new();
+
+    [RelayCommand]
+    private void GoToPlanner()
+    {
+        _navigationService.NavigateTo(typeof(PlanningViewModel).FullName);
+    }
+
+    [RelayCommand]
+    private async Task CloseHintAsync()
+    {
+        IsHintVisible = false;
+        await _localSettingsService.SaveSettingAsync("Show_Hint_In_Dashboard", false);
+    }
 
     [RelayCommand]
     private async Task LoadDashboardAsync()

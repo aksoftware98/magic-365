@@ -22,6 +22,7 @@
     <None Remove="Assets\envelope_3d.png" />
     <None Remove="Assets\gear_3d.png" />
     <None Remove="Assets\house_3d.png" />
+    <None Remove="Assets\light_bulb_3d.png" />
     <None Remove="Assets\Microsoft-Logo.png" />
     <None Remove="Assets\Microsoft_ToDo.png" />
     <None Remove="Assets\paintbrush_3d.png" />

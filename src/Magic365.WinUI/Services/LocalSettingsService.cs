@@ -71,6 +71,28 @@ public class LocalSettingsService : ILocalSettingsService
         return default;
     }
 
+    public async Task<string> ReadSetting(string key)
+    {
+        if (RuntimeHelper.IsMSIX)
+        {
+            if (ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out var obj))
+            {
+                return obj.ToString();
+            }
+        }
+        else
+        {
+            await InitializeAsync();
+
+            if (_settings != null && _settings.TryGetValue(key, out var obj))
+            {
+                return obj.ToString();
+            }
+        }
+
+        return null;
+    }
+
     public async Task SaveSettingAsync<T>(string key, T value)
     {
         if (RuntimeHelper.IsMSIX)

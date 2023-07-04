@@ -11,7 +11,7 @@
 
     <Grid ColumnSpacing="20"
           RowSpacing="20"
-          Margin="20, 0"
+          Margin="20, 0, 20, 10"
           x:Name="MainGrid">
         <VisualStateManager.VisualStateGroups>
             <!--  Visual states reflect the application's window size  -->
@@ -23,12 +23,12 @@
                     <VisualState.Setters>
                         <Setter Target="MainGrid.ColumnDefinitions[2].Width" Value="*" />
                         <Setter Target="MainGrid.ColumnDefinitions[3].Width" Value="*" />
-                        <Setter Target="MainGrid.RowDefinitions[0].Height" Value="Auto" />
-                        <Setter Target="MainGrid.RowDefinitions[1].Height" Value="Auto" />
+                        <Setter Target="MainGrid.RowDefinitions[2].Height" Value="Auto" />
+                        <Setter Target="MainGrid.RowDefinitions[3].Height" Value="Auto" />
                         <Setter Target="ToDoItemsWidget.(Grid.Column)" Value="0" />
                         <Setter Target="CalendarEventsWidget.(Grid.Column)" Value="1" />
-                        <Setter Target="ToDoItemsWidget.(Grid.Row)" Value="0" />
-                        <Setter Target="CalendarEventsWidget.(Grid.Row)" Value="0" />
+                        <Setter Target="ToDoItemsWidget.(Grid.Row)" Value="2" />
+                        <Setter Target="CalendarEventsWidget.(Grid.Row)" Value="2" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="MidLayout">
@@ -38,12 +38,12 @@
                     <VisualState.Setters>
                         <Setter Target="MainGrid.ColumnDefinitions[2].Width" Value="Auto" />
                         <Setter Target="MainGrid.ColumnDefinitions[3].Width" Value="Auto" />
-                        <Setter Target="MainGrid.RowDefinitions[0].Height" Value="Auto" />
-                        <Setter Target="MainGrid.RowDefinitions[1].Height" Value="Auto" />
+                        <Setter Target="MainGrid.RowDefinitions[2].Height" Value="Auto" />
+                        <Setter Target="MainGrid.RowDefinitions[3].Height" Value="Auto" />
                         <Setter Target="ToDoItemsWidget.(Grid.Column)" Value="0" />
                         <Setter Target="CalendarEventsWidget.(Grid.Column)" Value="1" />
-                        <Setter Target="ToDoItemsWidget.(Grid.Row)" Value="0" />
-                        <Setter Target="CalendarEventsWidget.(Grid.Row)" Value="0" />
+                        <Setter Target="ToDoItemsWidget.(Grid.Row)" Value="2" />
+                        <Setter Target="CalendarEventsWidget.(Grid.Row)" Value="2" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="NarrowLayout">
@@ -54,17 +54,19 @@
                         <Setter Target="MainGrid.ColumnDefinitions[1].Width" Value="Auto" />
                         <Setter Target="MainGrid.ColumnDefinitions[2].Width" Value="Auto" />
                         <Setter Target="MainGrid.ColumnDefinitions[3].Width" Value="Auto" />
-                        <Setter Target="MainGrid.RowDefinitions[0].Height" Value="*" />
-                        <Setter Target="MainGrid.RowDefinitions[1].Height" Value="*" />
+                        <Setter Target="MainGrid.RowDefinitions[2].Height" Value="*" />
+                        <Setter Target="MainGrid.RowDefinitions[3].Height" Value="*" />
                         <Setter Target="ToDoItemsWidget.(Grid.Column)" Value="0" />
                         <Setter Target="CalendarEventsWidget.(Grid.Column)" Value="0" />
-                        <Setter Target="ToDoItemsWidget.(Grid.Row)" Value="0" />
-                        <Setter Target="CalendarEventsWidget.(Grid.Row)" Value="1" />
+                        <Setter Target="ToDoItemsWidget.(Grid.Row)" Value="2" />
+                        <Setter Target="CalendarEventsWidget.(Grid.Row)" Value="3" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -81,14 +83,75 @@
                    Style="{ThemeResource HeaderTextBlockStyle}"
                    Margin="0, 20" />
 
+        <!-- Helper Text -->
+        <Border Grid.Row="1"
+                Grid.ColumnSpan="2"
+                CornerRadius="10"
+                BorderThickness="2"
+                Padding="15, 9"
+                BorderBrush="{ThemeResource ControlElevationBorderBrush}"
+                Visibility="{Binding IsHintVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#0689ff" Offset="1" />
+                    <GradientStop Color="#0faaff" Offset="0" />
+                </LinearGradientBrush>
+            </Border.Background>
 
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="/Assets/light_bulb_3d.png"
+                       Width="55"
+                       Height="55"
+                       Grid.Column="0"
+                       VerticalAlignment="Center" />
+
+                <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}"
+                           Text="Get started planning your tasks, calendar events, and meetings fluently with the power of AI"
+                           VerticalAlignment="Center"
+                           Grid.Column="1"
+                           Foreground="White"
+                           Margin="15, 0" />
+
+                <Button Style="{ThemeResource ButtonRevealStyle}"
+                        Command="{Binding GoToPlannerCommand}"
+                        Content="Go to Planner"
+                        Padding="20, 4"
+                        Margin="10"
+                        FontSize="16"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Grid.Column="2" />
+
+                <Button Command="{Binding CloseHintCommand}"
+                        Style="{ThemeResource ButtonRevealStyle}"
+                        Margin="3"
+                        Content="X"
+                        Grid.Column="3"
+                        Foreground="White"
+                        VerticalAlignment="Center"
+                        CornerRadius="5">
+                    
+                </Button>
+            </Grid>
+
+
+        </Border>
+
+
+        <!-- Widgets -->
         <!-- To Do Items Dashboard -->
         <Border CornerRadius="10"
                 BorderThickness="2"
                 BorderBrush="{ThemeResource ControlElevationBorderBrush}"
                 Background="{ThemeResource ControlFillColorInputActiveBrush}"
                 Padding="10, 5" 
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="0"
                 MaxHeight="600"
                 MinHeight="400"
@@ -165,7 +228,7 @@
                 BorderBrush="{ThemeResource ControlElevationBorderBrush}"
                 Background="{ThemeResource ControlFillColorInputActiveBrush}"
                 Padding="10, 5" 
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="1"
                 MaxHeight="600"
                 MinHeight="400"
