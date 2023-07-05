@@ -86,6 +86,7 @@ public partial class App : Application
             services.AddSingleton<INavigationService>(sp => GetService<IWinUINavigationService>());
             services.AddSingleton<IAuthenticationProvider, AuthenticationService>();
             services.AddSingleton<IPlanningClient, HttpPlanningClient>();
+            services.AddSingleton<IUsagesClient, HttpUsageTrackingClient>();
             // Core Services
             services.AddSingleton<IFileService, FileService>();
 

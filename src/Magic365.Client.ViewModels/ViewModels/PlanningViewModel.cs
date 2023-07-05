@@ -18,15 +18,18 @@ namespace Magic365.Client.ViewModels
         private readonly IPlanningClient _planningClient;
         private readonly INavigationService _navigation;
         private readonly IMessageDialogService _dialogsService;
+        private readonly IUsagesClient _usagesClient;
         private readonly User? _user;
         public PlanningViewModel(IPlanningClient planningClient,
                                  INavigationService navigation,
-                                 IMessageDialogService dialogsService)
+                                 IMessageDialogService dialogsService,
+                                 IUsagesClient usagesClient)
         {
             _planningClient = planningClient;
             _navigation = navigation;
             _user = LoginViewModel.User;
             _dialogsService = dialogsService;
+            _usagesClient = usagesClient;
         }
 
         #region Proeprties 
@@ -47,11 +50,18 @@ namespace Magic365.Client.ViewModels
             if (string.IsNullOrWhiteSpace(Note))
                 return;
 
+            _ = _usagesClient.TrackEventAsync(_user.AccessToken, new TrackUserEventDto
+            {
+                EventName = "Analyze Note",
+                SessionId = SessionVariables.SessionId,
+                UserId = _user.Email
+            });
+
             try
             {
                 IsBusy = true;
                 var plan = await _planningClient.AnalyzeNoteAsync(_user.AccessToken, Note);
-                Plan = new(plan, _planningClient);
+                Plan = new(plan, _planningClient, _usagesClient);
 
                 IsPlanSubmitted = true;
             }
@@ -75,6 +85,14 @@ namespace Magic365.Client.ViewModels
             // TODO: Validate the plan client-side 
             if (Plan == null)
                 return;
+
+            _ = _usagesClient.TrackEventAsync(_user.AccessToken, new TrackUserEventDto
+            {
+                EventName = "Submit Plan",
+                SessionId = SessionVariables.SessionId,
+                UserId = _user.Email
+            });
+
             IsBusy = true;
 
             var planRequest = BuildRequestObject();
@@ -102,6 +120,12 @@ namespace Magic365.Client.ViewModels
         {
             try
             {
+                _ = _usagesClient.TrackEventAsync(_user.AccessToken, new TrackUserEventDto
+                {
+                    EventName = "Search Contact",
+                    SessionId = SessionVariables.SessionId,
+                    UserId = _user.Email
+                });
                 return await _planningClient.SearchContactAsync(_user.AccessToken, query);
             }
             catch (ApiException ex)

@@ -20,12 +20,19 @@ public class UsageEvent : ITableEntity
 
     public string? UserId
     {
-    get; set; }
+        get; set;
+    }
 
 
     public string SessionId
     {
-    get; set; }
+        get; set;
+    }
+
+    public string Event
+    {
+        get; set;
+    } = string.Empty;
 
     public string? EventDataAsJson
     {

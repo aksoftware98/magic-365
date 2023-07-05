@@ -18,10 +18,12 @@ public partial class HomeViewModel : ObservableObject
     private readonly IMessageDialogService _dialogService;
     private readonly ILocalSettingsService _localSettingsService;
     private readonly INavigationService _navigationService;
+    private readonly IUsagesClient _usagesClient;
     public HomeViewModel(IPlanningClient planningClient,
                          IMessageDialogService dialogService,
                          ILocalSettingsService localSettingsService,
-                         INavigationService navigationService)
+                         INavigationService navigationService,
+                         IUsagesClient usagesClient)
     {
 
         _planningClient = planningClient;
@@ -31,6 +33,7 @@ public partial class HomeViewModel : ObservableObject
 
         var isHintSaved = _localSettingsService.ReadSetting("Show_Hint_In_Dashboard").Result;
         IsHintVisible = isHintSaved == null;
+        _usagesClient = usagesClient;
     }
 
     [ObservableProperty]
@@ -54,6 +57,12 @@ public partial class HomeViewModel : ObservableObject
     [RelayCommand]
     private async Task CloseHintAsync()
     {
+        _ = _usagesClient.TrackEventAsync(SessionVariables.User.AccessToken, new()
+        {
+            EventName = "Hint Closed",
+            SessionId = SessionVariables.SessionId,
+            UserId = SessionVariables.User.Email
+        });
         IsHintVisible = false;
         await _localSettingsService.SaveSettingAsync("Show_Hint_In_Dashboard", false);
     }
@@ -61,6 +70,12 @@ public partial class HomeViewModel : ObservableObject
     [RelayCommand]
     private async Task LoadDashboardAsync()
     {
+        _ = _usagesClient.TrackEventAsync(SessionVariables.User.AccessToken, new()
+        {
+            EventName = "Open Home Page",
+            SessionId = SessionVariables.SessionId,
+            UserId = SessionVariables.User.Email,
+        });
         IsBusy = true;
         try
         {

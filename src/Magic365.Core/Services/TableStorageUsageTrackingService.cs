@@ -51,6 +51,7 @@ public class TableStorageUsageTrackingService : IUsageTrackingService
             SessionId = eventDetails.SessionId,
             UserId = eventDetails.UserId,
             EventDataAsJson = eventDetails == null ? null : JsonSerializer.Serialize(eventDetails.EventData),
+            Event = eventDetails.EventName,
         };
         await _eventsTable.CreateIfNotExistsAsync();
         await _eventsTable.AddEntityAsync(eventEntity);

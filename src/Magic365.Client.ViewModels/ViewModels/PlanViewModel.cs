@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Magic365.Client.ViewModels.Interfaces;
+using Magic365.Client.ViewModels.Models;
 using Magic365.Shared.DTOs;
 using System.Collections.ObjectModel;
 
@@ -10,19 +11,25 @@ namespace Magic365.Client.ViewModels
 	{
 
         private readonly IPlanningClient _planningClient;
+        private readonly IUsagesClient _usagesClient;
 
 		[ObservableProperty]
 		private ObservableCollection<PlanItemViewModel> _items = new();
-
-        public PlanViewModel(PlanDetails planResult, IPlanningClient planningClient)
+        public PlanViewModel(PlanDetails planResult, IPlanningClient planningClient, IUsagesClient usagesClient)
         {
-            Items = new(planResult.Items.Select(p => new PlanItemViewModel(p, RemoveItem, this)));
+            _usagesClient = usagesClient;
             _planningClient = planningClient;
+            Items = new(planResult.Items.Select(p => new PlanItemViewModel(p, RemoveItem, this, usagesClient)));
         }
-
         private void RemoveItem(string id)
 		{
-			var item = Items.SingleOrDefault(i => i.Id == id);
+            _ = _usagesClient.TrackEventAsync(SessionVariables.User.AccessToken, new TrackUserEventDto
+            {
+                EventName = "Remove Plan Item",
+                SessionId = SessionVariables.SessionId,
+                UserId = SessionVariables.User.Email
+            });
+            var item = Items.SingleOrDefault(i => i.Id == id);
 			if (item != null)
 				Items.Remove(item);
 		}
