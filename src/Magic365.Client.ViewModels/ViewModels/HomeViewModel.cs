@@ -30,7 +30,7 @@ public partial class HomeViewModel : ObservableObject
         _navigationService = navigationService;
 
         var isHintSaved = _localSettingsService.ReadSetting("Show_Hint_In_Dashboard").Result;
-        IsHintVisible = isHintSaved != null;
+        IsHintVisible = isHintSaved == null;
     }
 
     [ObservableProperty]

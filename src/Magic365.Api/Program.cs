@@ -93,6 +93,25 @@ app.MapGet("/events/list", async (IGraphDataService planningService) =>
     .WithName("List upcoming calendar events")
     .WithDescription("Retrieve the upcoming 5 calendar events")
     .WithOpenApi();
+
+app.MapPost("/usages/start-session", async (SaveUserSessionDto session, IUsageTrackingService trackingService) =>
+{
+    var result = await trackingService.SaveUserSessionAsync(session);
+    return Results.Ok(result);
+})
+    .WithName("Track User Sessions")
+    .WithDescription("Track and start a user session")
+    .WithOpenApi();
+
+app.MapPost("/usages/track-event", async (TrackUserEventDto eventDto, IUsageTrackingService trackingService) =>
+{
+    await trackingService.TrackEventAsync(eventDto);
+    return Results.Ok();
+})
+    .WithName("Track User Sessions")
+    .WithDescription("Track and start a user session")
+    .WithOpenApi();
+
 #endregion 
 
 app.Run();

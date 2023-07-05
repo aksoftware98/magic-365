@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-
+using Magic365.Client.ViewModels;
 using Magic365.WinUI.Contracts.Services;
 using Magic365.WinUI.Views;
 

@@ -10,7 +10,7 @@
     mc:Ignorable="d">
 
     <Grid ColumnSpacing="20"
-          RowSpacing="20"
+          RowSpacing="10"
           Margin="20, 0, 20, 10"
           x:Name="MainGrid">
         <VisualStateManager.VisualStateGroups>

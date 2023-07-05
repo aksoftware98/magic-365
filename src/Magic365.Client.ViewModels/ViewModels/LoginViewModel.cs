@@ -40,8 +40,7 @@ namespace Magic365.Client.ViewModels
                 var user = await _authProvider.SignInAsync();
                 OnLoginUserSuccessfully.Invoke(user);
                 User = user;
-                //_navigation.NavigateTo("PlanningPage");
-			}
+            }
 			catch (Exception ex)
 			{
 				// TODO: Log the error 
