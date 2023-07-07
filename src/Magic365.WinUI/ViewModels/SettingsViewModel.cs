@@ -102,6 +102,12 @@ public partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     private async Task OpenBuyMeCoffeeAsync()
     {
+        _ = _usagesClient.TrackEventAsync(SessionVariables.User.AccessToken, new()
+        {
+            SessionId = SessionVariables.SessionId,
+            EventName = "Click on Buy Me Coffee",
+            UserId = SessionVariables.User.Email
+        });
         await Windows.System.Launcher.LaunchUriAsync(new Uri("https://www.buymeacoffee.com/akacademy99"));
     }
 
