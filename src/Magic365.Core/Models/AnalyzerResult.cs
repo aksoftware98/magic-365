@@ -30,5 +30,31 @@ namespace Magic365.Core.Models
 		public string? EndDate { get; set; }
 		[JsonPropertyName("people")]
 		public string[]? People { get; set; }
+
+		public string StartDateTime
+		{
+			get
+			{
+                if (string.IsNullOrWhiteSpace(StartDate))
+                    StartDate = DateTime.UtcNow.ToString("yyyy-MM-dd");
+                if (string.IsNullOrWhiteSpace(StartTime))
+                    StartTime = DateTime.UtcNow.ToString("HH:mm");
+
+				return $"{StartDate} {StartTime}";
+			}
+		}
+
+		public string EndDateTime
+		{
+			get
+			{
+                if (string.IsNullOrWhiteSpace(EndDate))
+                    StartDate = DateTime.UtcNow.ToString("yyyy-MM-dd");
+                if (string.IsNullOrWhiteSpace(EndTime))
+                    StartTime = DateTime.UtcNow.ToString("HH:mm");
+
+                return $"{EndDate} {EndTime}";
+			}
+		}
 	}
 }

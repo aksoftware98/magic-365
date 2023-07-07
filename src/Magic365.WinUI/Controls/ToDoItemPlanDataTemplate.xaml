@@ -1,0 +1,109 @@
+<!-- Copyright (c) Microsoft Corporation and Contributors. -->
+<!-- Licensed under the MIT License. -->
+
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewmodels="using:Magic365.Client.ViewModels">
+
+    <DataTemplate x:Key="ToDoItemPlanDataTemplate">
+
+        <Border CornerRadius="10"
+            Padding="5"
+            Margin="0, 4"
+            Background="{ThemeResource ControlFillColorInputActiveBrush}"    
+                BorderThickness="1"
+                BorderBrush="{ThemeResource ControlElevationBorderBrush}"
+            HorizontalAlignment="Stretch">
+
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border CornerRadius="3"
+                        Background="LimeGreen"
+                        Grid.Column="0"
+                        Grid.RowSpan="3"
+                        Width="4"
+                        Margin="20, 4" />
+
+                <Image Source="ms-appx:///Assets/check_mark_button_3d.png" 
+                       Grid.RowSpan="2"
+                          Width ="32"
+                            Height="32"
+                       Grid.Column="1" />
+                <TextBlock Grid.Column="3"
+                           Text="To Do Task"
+                           Style="{ThemeResource BaseTextBlockStyle}"
+                           Margin="12,6,0,0"/>
+
+                <StackPanel Grid.Column="3"
+                            Grid.Row="1">
+                    <TextBlock 
+                            Text="{Binding Title}"
+                            Style="{ThemeResource BodyTextBlockStyle}"
+                             Visibility="{Binding IsEditMode, Converter={StaticResource InverseBoolToVisibilityConverter}}"
+                            Margin="12,0,0,6"/>
+
+                    <TextBox Grid.Column="1"
+                         Grid.Row="1"
+                         Text="{Binding Title, Mode=TwoWay}"
+                         Visibility="{Binding IsEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                         Margin="12,0,0,6"/>
+
+                    <Border  Padding="5" CornerRadius="4"
+                            Margin="12, 0"
+                            Visibility="{Binding ErrorMessage, Converter={StaticResource EmptyStringToVisibilityConverter}}">
+                        <TextBlock Foreground="#FFB1B1" FontWeight="Medium" Text="{Binding ErrorMessage}" />
+                    </Border>
+                </StackPanel>
+                <!-- Action Buttons -->
+                <StackPanel Orientation="Horizontal"
+                            Grid.Column="3"
+                            Grid.Row="0"
+                            HorizontalAlignment="Right">
+                    <Button Command="{Binding EditCommand}"
+                            Margin="3"
+                            Visibility="{Binding IsEditMode, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        <Viewbox Width="12"
+                             Height="12">
+                            <SymbolIcon Symbol="Edit" />
+                        </Viewbox>
+                    </Button>
+                    <Button Command="{Binding SubmitChangesCommand}"
+                            Margin="3"
+                            Visibility="{Binding IsEditMode, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Viewbox Width="12"
+                             Height="12">
+                            <SymbolIcon Symbol="Save" />
+                        </Viewbox>
+                    </Button>
+                    <Button Command="{Binding CancelEditCommand}"
+                            Margin="3"
+                            Visibility="{Binding IsEditMode, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Viewbox Width="12"
+                             Height="12">
+                            <SymbolIcon Symbol="Cancel" />
+                        </Viewbox>
+                    </Button>
+                    <Button Command="{Binding DeleteCommand}"
+                            Margin="3">
+                        <Viewbox Width="12"
+                             Height="12">
+                            <SymbolIcon Symbol="Delete" Foreground="Pink" />
+                        </Viewbox>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+</ResourceDictionary>

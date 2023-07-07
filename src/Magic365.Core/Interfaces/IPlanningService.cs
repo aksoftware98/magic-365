@@ -24,5 +24,12 @@ namespace Magic365.Core.Interfaces
 		/// <param name="plan"></param>
 		/// <returns></returns>
 		Task SubmitPlanAsync(PlanDetails plan);
+
+        /// <summary>
+        /// Search contacts of the users
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        Task<IEnumerable<MeetingPerson>> FetchContactsAsync(string query);
 	}
 }

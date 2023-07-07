@@ -65,6 +65,68 @@ app.MapPost("/submit-plan", async ([FromBody] PlanDetails plan, IPlanningService
 	.WithName("Submit Plan")
 	.WithDescription("Submit a plan so the planned items inside it can be created via the Microsoft Graph")
 	.WithOpenApi();
+
+app.MapGet("/contacts/search", async ([FromQuery] string query, IPlanningService planningService) =>
+{
+    var result = await planningService.FetchContactsAsync(query);
+    return Results.Ok(result);
+})
+    .WithName("Search contacts")
+    .WithDescription("Search the contacts of the user using Microsoft Graph")
+    .WithOpenApi();
+
+
+app.MapGet("/tasks/list", async (IGraphDataService planningService) =>
+{
+    var result = await planningService.GetLastTasksAsync();
+    return Results.Ok(result);
+})
+    .WithName("List pending tasks")
+    .WithDescription("Retrieve 5 pending tasks from the 'Tasks' list in Microsoft To Do")
+    .WithOpenApi();
+
+app.MapGet("/events/list", async (IGraphDataService planningService) =>
+{
+    var result = await planningService.GetUpcomingEventsAsync();
+    return Results.Ok(result);
+})
+    .WithName("List upcoming calendar events")
+    .WithDescription("Retrieve the upcoming 5 calendar events")
+    .WithOpenApi();
+
+app.MapPost("/usages/start-session", async ([FromBody] SaveUserSessionDto session, IUsageTrackingService trackingService) =>
+{
+    var result = await trackingService.SaveUserSessionAsync(session);
+    return Results.Ok(result);
+})
+    .WithName("Track User Session")
+    .WithDescription("Track and start a user session")
+    .WithOpenApi();
+
+app.MapPost("/usages/track-event", async ([FromBody] TrackUserEventDto eventDto, IUsageTrackingService trackingService) =>
+{
+    await trackingService.TrackEventAsync(eventDto);
+    return Results.Ok();
+})
+    .WithName("Track User Event")
+    .WithDescription("Track and start a user session")
+    .WithOpenApi();
+
+app.MapGet("/plans/history", async ([FromQuery] string userId, IPlansStorageService plansStorageService) =>
+{
+    var result = await plansStorageService.ListPlansAsync(userId);
+    return Results.Ok(result.Select(r => new PlanHistoryDto
+    {
+        Note = r.Note,
+        Date = r.PlanDate,
+        EventsCount = r.EventsCount,
+        MeetingsCount = r.MeetingsCount,
+        ToDoItemsCount = r.ToDoItemsCount
+    }));
+})
+    .WithName("List History")
+    .WithDescription("List the history of submitted notes")
+    .WithOpenApi();
 #endregion 
 
 app.Run();

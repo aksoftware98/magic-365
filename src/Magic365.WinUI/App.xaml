@@ -1,0 +1,29 @@
+﻿<Application
+    x:Class="Magic365.WinUI.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="using:Magic365.WinUI.Converters">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+                <ResourceDictionary Source="/Styles/FontSizes.xaml" />
+                <ResourceDictionary Source="/Styles/Thickness.xaml" />
+                <ResourceDictionary Source="/Styles/TextBlock.xaml" />
+                <ResourceDictionary Source="Controls/ToDoItemPlanDataTemplate.xaml"/>
+                <ResourceDictionary Source="Controls/MeetingPlanDataTemplate.xaml"/>
+                <ResourceDictionary Source="Controls/EventPlanDataTemplate.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+            <converters:DateTimeToTimeSpanConverter x:Key="DateTimeToTimespanConverter" />
+            <converters:DateTimeToDateTimeSpanConverter x:Key="DateTimeToDateSpanConverter" />
+            <converters:DateTimeToTimeStringConverter x:Key="DateTimeToTimeStringConverter" />
+            <converters:DateTimeToDateStringConverter x:Key="DateTimeToDateStringConverter" />
+            <converters:EmptyEmailToStringConverter x:Key="EmptyEmailToStringConverter" />
+            <converters:EmptyStringToVisibilityConverter x:Key="EmptyStringToVisibilityConverter" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

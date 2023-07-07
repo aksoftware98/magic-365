@@ -42,6 +42,11 @@ namespace Magic365.Client.ViewModels
 
 		public Action<ContactViewModel> DeleteItemAction { get; set; }
 
+        public bool IsNewContact
+        {
+            get; set; 
+        }
+
 		private string? _existingDisplayName;
 		private string? _existingEmail;
 
@@ -53,11 +58,14 @@ namespace Magic365.Client.ViewModels
 				return;
 			ErrorMessage = string.Empty;
 			IsEditMode = false;
+            IsNewContact = false;
 		}
 
 		[RelayCommand]
 		private void CancelEdit()
 		{
+            if (IsNewContact)
+                Delete();
 			IsEditMode = false;
 			ResetContent();
 		}

@@ -11,58 +11,131 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Magic365.Client.ViewModels.Services
+namespace Magic365.Client.ViewModels.Services;
+
+// TODO: Refactor the code of Http request and use a global user object instead of passing the token explicitly as below
+public class HttpPlanningClient : HttpClientServiceBase, IPlanningClient
 {
-	// TODO: Refactor the code of Http request and use a global user object instead of passing the token excplicityly as below
-	public class HttpPlanningClient : IPlanningClient
-	{
+    public async Task<PlanDetails> AnalyzeNoteAsync(string? token, string? note)
+    {
+        if (string.IsNullOrWhiteSpace(note))
+            throw new ArgumentNullException(nameof(note));
 
-		/* COMMENT THE FOLLWOING LINE AND UNCOMMENT THE AFTER TO USE THE LOCAL API IN DEBUG MODE INSTEAD OF THE ONLINE VERSION */
-		//private const string BaseUrl = "https://Magic365.azurewebsites.net";
+        using var client = new HttpClient();
+        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
-		/* UNCOMMENT THIS FOR LOCAL TESTING */
-		private const string BaseUrl = "https://localhost:7210";
+        var response = await client.PostAsJsonAsync($"{BaseUrl}/analyze-note", new
+        {
+            query = note
+        });
 
-		public async Task<PlanDetails> AnalyzeNoteAsync(string token, string note)
-		{
-			if (string.IsNullOrWhiteSpace(note))
-				throw new ArgumentNullException(nameof(note));
+        if (response.IsSuccessStatusCode)
+        {
+            var result = await response.Content.ReadFromJsonAsync<PlanDetails>();
+            return result ?? new();
+        }
+        else
+        {
+            var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+            throw new ApiException(error);
+        }
+    }
 
-			using var client = new HttpClient();
-			client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+    public async Task<IEnumerable<PlanHistoryDto>> ListHistoryAsync(string token, string userId)
+    {
+        if (string.IsNullOrWhiteSpace(userId))
+            throw new ArgumentNullException(nameof(userId));
 
-			var response = await client.PostAsJsonAsync($"{BaseUrl}/analyze-note", new
-			{
-				query = note
-			});
+        using var client = new HttpClient();
+        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
-			if (response.IsSuccessStatusCode)
-			{
-				var result = await response.Content.ReadFromJsonAsync<PlanDetails>();
-				return result ?? new(); 
-			}
-			else
-			{
-				var content = await response.Content.ReadAsStringAsync();
-				Debug.WriteLine(content);
-				var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
-				throw new ApiException(error);
-			}
-		}
+        var response = await client.GetAsync($"{BaseUrl}/plans/history?userId={userId}");
 
-		public async Task SubmitPlanAsync(string? token, PlanDetails request)
-		{
+        if (response.IsSuccessStatusCode)
+        {
+            var result = await response.Content.ReadFromJsonAsync<IEnumerable<PlanHistoryDto>>();
+            return result ?? Enumerable.Empty<PlanHistoryDto>();
+        }
+        else
+        {
+            var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+            throw new ApiException(error);
+        }
+    }
 
-			using var client = new HttpClient();
-			client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+    public async Task<IEnumerable<ToDoItemDto>> ListUndoneToDoTasksAsync(string? token)
+    {
+        using var client = new HttpClient();
+        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
-			var response = await client.PostAsJsonAsync($"{BaseUrl}/submit-plan", request);
+        var response = await client.GetAsync($"{BaseUrl}/tasks/list");
+        if (response.IsSuccessStatusCode)
+        {
+            var result = await response.Content.ReadFromJsonAsync<IEnumerable<ToDoItemDto>>();
+            return result ?? Enumerable.Empty<ToDoItemDto>();
+        }
+        else
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            Debug.WriteLine(content);
+            var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+            throw new ApiException(error);
+        }
+    }
 
-			if (!response.IsSuccessStatusCode)
-			{ 
-				var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
-				throw new ApiException(error);
-			}
-		}
-	}
+    public async Task<IEnumerable<CalendarEventDto>> ListUpcomingCalendarEventsAsync(string? token)
+    {
+        using var client = new HttpClient();
+        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+        var response = await client.GetAsync($"{BaseUrl}/events/list");
+        if (response.IsSuccessStatusCode)
+        {
+            var result = await response.Content.ReadFromJsonAsync<IEnumerable<CalendarEventDto>>();
+            return result ?? Enumerable.Empty<CalendarEventDto>();
+        }
+        else
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            Debug.WriteLine(content);
+            var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+            throw new ApiException(error);
+        }
+    }
+
+    public async Task<IEnumerable<MeetingPerson>> SearchContactAsync(string token, string query)
+    {
+        using var client = new HttpClient();
+        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+        var response = await client.GetAsync($"{BaseUrl}/contacts/search?query={query}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var result = await response.Content.ReadFromJsonAsync<IEnumerable<MeetingPerson>>();
+            return result ?? Enumerable.Empty<MeetingPerson>();
+        }
+        else
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            Debug.WriteLine(content);
+            var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+            throw new ApiException(error);
+        }
+    }
+
+    public async Task SubmitPlanAsync(string? token, PlanDetails request)
+    {
+
+        using var client = new HttpClient();
+        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+        var response = await client.PostAsJsonAsync($"{BaseUrl}/submit-plan", request);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+            throw new ApiException(error);
+        }
+    }
 }

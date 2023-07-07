@@ -58,24 +58,41 @@ namespace Magic365.Core.Services
 				var items = new List<PlanItem>();
 				foreach (var planItem in analyzerResult)
 				{
+                    if ((planItem.StartDate == "null" || planItem.StartDate == null) && planItem.Type != "ToDoItem")
+                        planItem.StartDate = DateTime.UtcNow.Date.ToString("yyyy-MM-dd");  
+                    if ((planItem.EndDate == "null" || planItem.EndDate == null) && planItem.Type != "ToDoItem")
+                        planItem.EndDate = DateTime.UtcNow.Date.ToString("yyyy-MM-dd");
+					if (planItem.StartTime == null && planItem.EndTime == null)
+						planItem.Type = "ToDoItem";
 					switch (planItem.Type)
 					{
 						case "ToDoItem":
 							items.Add(new PlanItem
 							{
 								Title = planItem.Action,
+								Type = PlanEntityType.ToDoItem,
 							});
 							break;
 						case "Event":
 							items.Add(new PlanItem
 							{
 								Title = planItem.Action,
+								EndTime = DateTime.ParseExact(planItem.EndDateTime, "yyyy-MM-dd hh:mm tt", null),
+								StartTime = DateTime.ParseExact(planItem.StartDateTime, "yyyy-MM-dd hh:mm tt", null),
+								Type = PlanEntityType.Event
 							});
 							break;
 						case "Meeting":
 							items.Add(new PlanItem
 							{
 								Title = planItem.Action,
+								EndTime = DateTime.ParseExact(planItem.EndDateTime, "yyyy-MM-dd hh:mm tt", null),
+								StartTime = DateTime.ParseExact(planItem.StartDateTime, "yyyy-MM-dd hh:mm tt", null),
+								Type = PlanEntityType.Meeting,
+								People = planItem?.People?.Select(p => new MeetingPerson
+								{
+									Name = p
+								})
 							});
 							break;
 						default:

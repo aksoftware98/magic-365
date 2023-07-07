@@ -9,7 +9,8 @@ namespace Magic365.Client.ViewModels.Interfaces
 	public interface INavigationService
 	{
 
-		void NavigateTo(string pageKey);
+		void NavigateTo(string pageKey, object? args = null);
+		
 		
 
 	}

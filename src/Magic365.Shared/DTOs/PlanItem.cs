@@ -28,6 +28,6 @@ namespace Magic365.Shared.DTOs
 		public DateTime? EndTime { get; set; }
 
 		[JsonPropertyName("people")]
-		public IEnumerable<MeetingPerson> People { get; set; }
+		public IEnumerable<MeetingPerson>? People { get; set; }
 	}
 }
