@@ -21,10 +21,12 @@ public partial class SettingsViewModel : ObservableObject
     private readonly ILocalSettingsService _localSettingsService;
     private readonly IAuthenticationProvider _authenticationProvider;
     private readonly IUsagesClient _usagesClient;
+    private readonly INavigationService _navigationService;
     public SettingsViewModel(IThemeSelectorService themeSelectorService,
                              ILocalSettingsService localSettingsService,
                              IAuthenticationProvider authenticationProvider,
-                             IUsagesClient usagesClient)
+                             IUsagesClient usagesClient,
+                             INavigationService navigationService)
     {
         _themeSelectorService = themeSelectorService;
         _localSettingsService = localSettingsService;
@@ -32,6 +34,7 @@ public partial class SettingsViewModel : ObservableObject
 
         _theme = Themes.Last();
         _usagesClient = usagesClient;
+        _navigationService = navigationService;
     }
 
     [ObservableProperty]
@@ -94,6 +97,12 @@ public partial class SettingsViewModel : ObservableObject
 
         await _authenticationProvider.SignOutAsync();
         App.MainWindow.Content = App.GetService<LoginPage>();
+    }
+
+    [RelayCommand]
+    private async Task OpenBuyMeCoffeeAsync()
+    {
+        await Windows.System.Launcher.LaunchUriAsync(new Uri("https://www.buymeacoffee.com/akacademy99"));
     }
 
 }

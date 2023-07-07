@@ -93,6 +93,46 @@
 
                 </Grid>
             </Border>
+
+            <Border CornerRadius="5"
+                Background="{ThemeResource ControlFillColorDefaultBrush}"
+                BorderThickness="1"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultSolidBrush}"
+                Margin="30, 5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/Assets/money_bag_3d.png"
+                           Width="55"
+                           Height="55"
+                           Margin="15, 8, 30, 8" 
+                           VerticalAlignment="Center"/>
+
+                    <StackPanel Grid.Column="1"
+                                VerticalAlignment="Center">
+                        <TextBlock Text="Liked the product"
+                                   Grid.Column="1"
+                                   VerticalAlignment="Center"
+                                   Style="{ThemeResource BodyTextBlockStyle}" />
+
+                        <TextBlock Text="Consider support the developer through Buy Me a Coffee"
+                                   Grid.Column="1"
+                                   VerticalAlignment="Center"
+                                   Style="{ThemeResource CaptionTextBlockStyle}" />
+                    </StackPanel>
+
+
+                    <Button Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Margin="20, 0"
+                            Content="Buy Me a Coffee"
+                            Command="{x:Bind ViewModel.OpenBuyMeCoffeeCommand}"/>
+
+                </Grid>
+            </Border>
         </StackPanel>
     </Grid>
   

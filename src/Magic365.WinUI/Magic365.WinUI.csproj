@@ -26,6 +26,7 @@
     <None Remove="Assets\memo_3d.png" />
     <None Remove="Assets\Microsoft-Logo.png" />
     <None Remove="Assets\Microsoft_ToDo.png" />
+    <None Remove="Assets\money_bag_3d.png" />
     <None Remove="Assets\paintbrush_3d.png" />
     <None Remove="Assets\rocket_3d.png" />
     <None Remove="Assets\sad_but_relieved_face_3d.png" />
