@@ -146,6 +146,8 @@ namespace Magic365.Client.ViewModels
         {
             return new()
             {
+                Note = Note,
+                UserId = SessionVariables.User.Email,
                 Items = Plan.Items.Select(p => new PlanItem
                 {
                     Type = p.Type,

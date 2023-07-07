@@ -29,6 +29,7 @@ public class TableStoragePlansService : IPlansStorageService
     {
         var plans = new List<PlanMetadata>();
 
+        await _plansTable.CreateIfNotExistsAsync();
         var query = TableClient.CreateQueryFilter<PlanMetadata>(p => p.UserId == userId);
         await foreach (var plan in _plansTable.QueryAsync<PlanMetadata>(query))
         {

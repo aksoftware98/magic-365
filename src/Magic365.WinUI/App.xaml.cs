@@ -103,6 +103,8 @@ public partial class App : Application
             services.AddTransient<SettingsPage>();
             services.AddTransient<HomeViewModel>();
             services.AddTransient<HomePage>();
+            services.AddTransient<HistoryPage>();
+            services.AddTransient<HistoryViewModel>();
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));

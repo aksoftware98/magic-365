@@ -81,17 +81,24 @@
                           IsActive="{Binding IsBusy}"/>
         </Grid>
 
-        <Grid Grid.Column="1"
-               Grid.Row="1"
-              Visibility="{Binding IsPlanSubmitted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-            <TextBlock Style="{ThemeResource BaseTextBlockStyle}"
+        <StackPanel Grid.Column="1"
+                    Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Visibility="{Binding IsPlanSubmitted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+            <Image Width="140"
+                   Height="140"
+                   Source="/Assets/memo_3d.png"
+                   HorizontalAlignment="Center"
+                   Margin="10" />
+            <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}"
                        Text="Submit your note to see if we are on the same page"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Margin="30, 0"
                        TextWrapping="Wrap"
                        HorizontalTextAlignment="Center" />
-        </Grid>
+        </StackPanel>
 
 
         <Grid Grid.Column="1"

@@ -124,5 +124,5 @@ public class NavigationService : IWinUINavigationService
         }
     }
 
-    public void NavigateTo(string pageKey) => NavigateTo(pageKey, null, false);
+    public void NavigateTo(string pageKey, object? args) => NavigateTo(pageKey, args, false);
 }

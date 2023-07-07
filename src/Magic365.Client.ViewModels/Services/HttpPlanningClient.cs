@@ -41,6 +41,28 @@ public class HttpPlanningClient : HttpClientServiceBase, IPlanningClient
         }
     }
 
+    public async Task<IEnumerable<PlanHistoryDto>> ListHistoryAsync(string token, string userId)
+    {
+        if (string.IsNullOrWhiteSpace(userId))
+            throw new ArgumentNullException(nameof(userId));
+
+        using var client = new HttpClient();
+        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+        var response = await client.GetAsync($"{BaseUrl}/plans/history?userId={userId}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var result = await response.Content.ReadFromJsonAsync<IEnumerable<PlanHistoryDto>>();
+            return result ?? Enumerable.Empty<PlanHistoryDto>();
+        }
+        else
+        {
+            var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+            throw new ApiException(error);
+        }
+    }
+
     public async Task<IEnumerable<ToDoItemDto>> ListUndoneToDoTasksAsync(string? token)
     {
         using var client = new HttpClient();

@@ -73,4 +73,9 @@ public sealed partial class PlanningPage : Page
         return null;
     }
 
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        ViewModel.Note = e.Parameter as string ?? string.Empty;
+    }
+
 }

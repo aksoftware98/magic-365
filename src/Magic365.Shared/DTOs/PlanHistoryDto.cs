@@ -23,6 +23,8 @@ public class PlanHistoryDto
         get;set;
     }
 
+    public string DateTimeString => Date.ToLocalTime().ToString("MMM dd yyyy hh:mm tt");
+
     public int ToDoItemsCount
     {
         get; set;

@@ -72,7 +72,7 @@
                         </StackPanel>
                     </NavigationViewItem.Content>
                 </NavigationViewItem>
-                <NavigationViewItem helpers:NavigationHelper.NavigateTo="Magic365.Client.ViewModels.PlanningViewModel">
+                <NavigationViewItem helpers:NavigationHelper.NavigateTo="Magic365.Client.ViewModels.HistoryViewModel">
                     <NavigationViewItem.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Assets/watch_3d.png" Width="32" Height="32" 

@@ -112,7 +112,7 @@ app.MapPost("/usages/track-event", async ([FromBody] TrackUserEventDto eventDto,
     .WithDescription("Track and start a user session")
     .WithOpenApi();
 
-app.MapPost("/plans/history", async ([FromQuery] string userId, IPlansStorageService plansStorageService) =>
+app.MapGet("/plans/history", async ([FromQuery] string userId, IPlansStorageService plansStorageService) =>
 {
     var result = await plansStorageService.ListPlansAsync(userId);
     return Results.Ok(result.Select(r => new PlanHistoryDto
