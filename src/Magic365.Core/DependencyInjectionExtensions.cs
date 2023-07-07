@@ -28,6 +28,7 @@ namespace Magic365.Core
 				.AddPlanningService()
 				.AddScoped<INoteAnalyzingService, NoteAnalyzingService>()
                 .AddScoped<IGraphDataService, MicrosoftGraphDataService>()
+                .AddScoped<IPlansStorageService, TableStoragePlansService>()
                 .AddScoped<IUsageTrackingService>(sp => new TableStorageUsageTrackingService(config["AzureStorageConnectionString"]));
 		}
 
