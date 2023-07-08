@@ -11,15 +11,15 @@
   IgnorableNamespaces="uap rescap genTemplate">
 
   <Identity
-    Name="fd2d3a14-10ad-4b5d-ba45-14d3fcfa8fad"
-    Publisher="CN=aksof"
+    Name="59449AhmadMozaffar.Magic365"
+    Publisher="CN=C9E0A685-B2F8-4212-8146-F60D270821E6"
     Version="1.0.0.0" />
     
-  <mp:PhoneIdentity PhoneProductId="fd2d3a14-10ad-4b5d-ba45-14d3fcfa8fad" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="16e156a0-14b7-4fb7-a0e0-b7f70b2d35f5" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
     
   <Properties>
-    <DisplayName>Magic365.WinUI</DisplayName>
-    <PublisherDisplayName>aksof</PublisherDisplayName>
+    <DisplayName>Magic Note</DisplayName>
+    <PublisherDisplayName>Ahmad Mozaffar</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
