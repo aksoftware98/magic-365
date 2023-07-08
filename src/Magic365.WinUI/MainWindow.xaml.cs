@@ -1,4 +1,5 @@
-﻿using Magic365.WinUI.Helpers;
+﻿using Magic365.WinUI.Contracts.Services;
+using Magic365.WinUI.Helpers;
 
 using Windows.UI.ViewManagement;
 
@@ -7,17 +8,15 @@ namespace Magic365.WinUI;
 public sealed partial class MainWindow : WindowEx
 {
     private Microsoft.UI.Dispatching.DispatcherQueue dispatcherQueue;
-
     private UISettings settings;
 
     public MainWindow()
     {
         InitializeComponent();
-
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.ico"));
         Content = null;
         Title = "AppDisplayName".GetLocalized();
-
+        
         // Theme change code picked from https://github.com/microsoft/WinUI-Gallery/pull/1239
         dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
         settings = new UISettings();

@@ -4,6 +4,7 @@
 using Magic365.Client.ViewModels;
 using Magic365.Client.ViewModels.Interfaces;
 using Magic365.Client.ViewModels.Models;
+using Magic365.WinUI.Helpers;
 using Magic365.WinUI.ViewModels;
 using Magic365.WinUI.Views;
 using Microsoft.UI.Xaml;
@@ -48,10 +49,24 @@ namespace Magic365.WinUI.Pages
                 var _shellPage = App.GetService<ShellPage>();
                 App.MainWindow.Content = _shellPage;
             };
+
+            App.MainWindow.ExtendsContentIntoTitleBar = true;
+            App.MainWindow.SetTitleBar(AppTitleBar);
+            App.MainWindow.Activated += MainWindow_Activated;
         }
+
+        private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
+        {
+            var resource = args.WindowActivationState == WindowActivationState.Deactivated ? "WindowCaptionForegroundDisabled" : "WindowCaptionForeground";
+
+            AppTitleBarText.Foreground = (SolidColorBrush)App.Current.Resources[resource];
+            App.AppTitlebar = AppTitleBarText as UIElement;
+        }
+
 
         private async void LoginPage_Loaded(object sender, RoutedEventArgs e)
         {
+            TitleBarHelper.UpdateTitleBar(RequestedTheme);
             var result = await _localSettingsService.ReadSettingAsync<bool>("IsLoggedIn");
             if (result)
             {

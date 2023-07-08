@@ -113,12 +113,12 @@
 
                     <StackPanel Grid.Column="1"
                                 VerticalAlignment="Center">
-                        <TextBlock Text="Liked the product"
+                        <TextBlock Text="Liked the product?"
                                    Grid.Column="1"
                                    VerticalAlignment="Center"
                                    Style="{ThemeResource BodyTextBlockStyle}" />
 
-                        <TextBlock Text="Consider support the developer through Buy Me a Coffee"
+                        <TextBlock Text="Consider supporting the developer through Buy Me a Coffee"
                                    Grid.Column="1"
                                    VerticalAlignment="Center"
                                    Style="{ThemeResource CaptionTextBlockStyle}" />
@@ -131,6 +131,60 @@
                             Content="Buy Me a Coffee"
                             Command="{x:Bind ViewModel.OpenBuyMeCoffeeCommand}"/>
 
+                </Grid>
+            </Border>
+
+            <Border CornerRadius="5"
+                Background="{ThemeResource ControlFillColorDefaultBrush}"
+                BorderThickness="1"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultSolidBrush}"
+                Margin="30, 5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/Assets/red_heart_3d.png"
+                           Width="55"
+                           Height="55"
+                           Margin="15, 8, 30, 8" 
+                           VerticalAlignment="Center"/>
+
+                    <StackPanel Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Margin="0, 15, 80, 15">
+                        <TextBlock Text="About Magic 365"
+                                   Grid.Column="1"
+                                   VerticalAlignment="Center"
+                                   Style="{ThemeResource BodyTextBlockStyle}" />
+
+                        <TextBlock Text="Veriosn: 1.0.0"
+                                   Grid.Column="1"
+                                   VerticalAlignment="Center"
+                                   Style="{ThemeResource CaptionTextBlockStyle}" />
+
+                        <TextBlock Text="Magic 365 is an open-source software that demonstrates the power of Open AI GPT models, in addition to the power of Windows App SDK and the WinUI 3.0\Magic 365 allows you to manage your tasks, calendar events, and meetings using your natural language. Magic 365 will support time and actiosn tracking using AI starting v2 and up"
+                                   VerticalAlignment="Center"
+                                   Margin="0, 5, 0, 0"
+                                   Style="{ThemeResource CaptionTextBlockStyle}" />
+
+                        <StackPanel Orientation="Horizontal">
+                            <HyperlinkButton NavigateUri="https://github.com/aksoftware98/magic-365"
+                                         Margin="0, 5, 10, 0"
+                                         Content="GitHub Repository"
+                                            Command="{Binding OpenGitHubRepoCommand}"/>
+
+                            <HyperlinkButton NavigateUri="https://ahmadmozaffar.net"
+                                         Margin="0, 5, 0, 0"
+                                         Content="Ahmad Mozaffar's Offical Website"
+                                             Command="{Binding OpenWebsiteCommand}"/>
+                        </StackPanel>
+                        
+                    </StackPanel>
+                    
+                    
+                    
                 </Grid>
             </Border>
         </StackPanel>

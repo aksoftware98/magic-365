@@ -1,6 +1,7 @@
 ﻿using Magic365.Client.ViewModels;
 using Magic365.WinUI.Contracts.Services;
 using Magic365.WinUI.Helpers;
+using Magic365.WinUI.Services;
 using Magic365.WinUI.ViewModels;
 
 using Microsoft.UI.Xaml;
@@ -19,17 +20,17 @@ public sealed partial class ShellPage : Page
     {
         get;
     }
-
+    private readonly IThemeSelectorService _themeSelectorService;
     public ShellPage(ShellViewModel viewModel)
     {
         ViewModel = viewModel;
         InitializeComponent();
 
+        _themeSelectorService = App.GetService<IThemeSelectorService>();
+
         ViewModel.NavigationService.Frame = NavigationFrame;
         ViewModel.NavigationViewService.Initialize(NavigationViewControl);
-        // TODO: Set the title bar icon by updating /Assets/WindowIcon.ico.
-        // A custom title bar is required for full window theme and Mica support.
-        // https://docs.microsoft.com/windows/apps/develop/title-bar?tabs=winui3#full-customization
+        
         App.MainWindow.ExtendsContentIntoTitleBar = true;
         App.MainWindow.SetTitleBar(AppTitleBar);
         App.MainWindow.Activated += MainWindow_Activated;
@@ -43,8 +44,9 @@ public sealed partial class ShellPage : Page
 
         KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu));
         KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.GoBack));
-
+        _themeSelectorService.SetRequestedThemeAsync();
         ViewModel.NavigationService.NavigateTo(typeof(HomeViewModel).FullName);
+        
     }
 
     private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)

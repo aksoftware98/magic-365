@@ -15,7 +15,7 @@
               Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
               IsHitTestVisible="True"
               VerticalAlignment="Top">
-            <Image Source="/Assets/WindowIcon.ico"
+            <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"
                    HorizontalAlignment="Left"
                    Width="16"
                    Height="16" />

@@ -17,7 +17,7 @@ namespace Magic365.Client.ViewModels
 		private readonly INavigationService _navigation;
 		private readonly IMessageDialogService _messageDialogService;
         private readonly IUsagesClient _usagesClient;
-
+        
         public LoginViewModel(IAuthenticationProvider authProvider,
                               INavigationService navigation,
                               IMessageDialogService messageDialogService,
@@ -64,5 +64,16 @@ namespace Magic365.Client.ViewModels
 			IsBusy = false; 
 		}
 
-	}
+        [RelayCommand]
+        private void OpenWebsite()
+        {
+            _ = _usagesClient.TrackEventAsync(SessionVariables.User.AccessToken, new()
+            {
+                SessionId = SessionVariables.SessionId,
+                EventName = "Click on Open Settings Website",
+                UserId = SessionVariables.User.Email
+            });
+        }
+
+    }
 }
