@@ -32,9 +32,21 @@ public partial class SettingsViewModel : ObservableObject
         _localSettingsService = localSettingsService;
         _authenticationProvider = authenticationProvider;
 
-        _theme = Themes.Last();
         _usagesClient = usagesClient;
         _navigationService = navigationService;
+
+        if (_themeSelectorService.Theme == ElementTheme.Dark)
+        {
+            _theme = Themes[1];
+        }
+        else if (_themeSelectorService.Theme == ElementTheme.Light)
+        {
+            _theme = Themes.First();
+        }
+        else
+        {
+            _theme = Themes.Last();
+        }
     }
 
     [ObservableProperty]
@@ -109,6 +121,28 @@ public partial class SettingsViewModel : ObservableObject
             UserId = SessionVariables.User.Email
         });
         await Windows.System.Launcher.LaunchUriAsync(new Uri("https://www.buymeacoffee.com/akacademy99"));
+    }
+
+    [RelayCommand]
+    private void OpenGitHubRepo()
+    {
+        _ = _usagesClient.TrackEventAsync(SessionVariables.User.AccessToken, new()
+        {
+            SessionId = SessionVariables.SessionId,
+            EventName = "Click on Open Settings GitHub Repository",
+            UserId = SessionVariables.User.Email
+        });
+    }
+
+    [RelayCommand]
+    private void OpenWebsite()
+    {
+        _ = _usagesClient.TrackEventAsync(SessionVariables.User.AccessToken, new()
+        {
+            SessionId = SessionVariables.SessionId,
+            EventName = "Click on Open Settings Website",
+            UserId = SessionVariables.User.Email
+        });
     }
 
 }

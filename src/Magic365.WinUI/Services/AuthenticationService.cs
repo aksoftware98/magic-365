@@ -61,8 +61,8 @@ namespace Magic365.WinUI.Services
 			catch (MsalUiRequiredException ex)
 			{
 				Debug.WriteLine($"MsalUiRequiredException: {ex.Message}");
-
-				authResult = await PublicClientApp.AcquireTokenInteractive(Scopes)
+                await _localSettings.SaveSettingAsync("IsLoggedIn", false);
+                authResult = await PublicClientApp.AcquireTokenInteractive(Scopes)
 												  .ExecuteAsync()
 												  .ConfigureAwait(false);
 				

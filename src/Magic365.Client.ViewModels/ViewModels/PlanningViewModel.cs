@@ -100,7 +100,7 @@ namespace Magic365.Client.ViewModels
             {
                 await _planningClient.SubmitPlanAsync(_user.AccessToken, planRequest);
 
-                _navigation.NavigateTo("PlanSubmittedPage");
+                _navigation.NavigateTo(typeof(HomeViewModel).FullName);
             }
             catch (ApiException ex)
             {

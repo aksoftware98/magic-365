@@ -26,5 +26,10 @@ public sealed partial class SettingsPage : Page
             SessionId = SessionVariables.SessionId
         });
     }
+
+    private void HyperlinkButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+
+    }
 }
 
