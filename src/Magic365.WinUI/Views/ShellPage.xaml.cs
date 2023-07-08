@@ -3,7 +3,7 @@ using Magic365.WinUI.Contracts.Services;
 using Magic365.WinUI.Helpers;
 using Magic365.WinUI.Services;
 using Magic365.WinUI.ViewModels;
-
+using Microsoft.AppCenter.Analytics;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -46,7 +46,8 @@ public sealed partial class ShellPage : Page
         KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.GoBack));
         _themeSelectorService.SetRequestedThemeAsync();
         ViewModel.NavigationService.NavigateTo(typeof(HomeViewModel).FullName);
-        
+
+        Analytics.StartSession();
     }
 
     private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
