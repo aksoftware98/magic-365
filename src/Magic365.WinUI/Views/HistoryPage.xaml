@@ -18,46 +18,13 @@
                    Text="History"
                    Grid.Row="0"/>
 
-        <StackPanel Grid.Row="1"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Visibility="{x:Bind ViewModel.IsHistoryEmpty, Converter={StaticResource BoolToVisibilityConverter}}">
 
-            <Image Source="/Assets/sad_but_relieved_face_3d.png"
-                   Width="150"
-                   Height="150"
-                   Margin="10"
-                   HorizontalAlignment="Center"/>
-
-            <TextBlock Text="No notes submitted yet!, click Get Started and submit your first note"
-                       HorizontalAlignment="Center"
-                       Margin="10" 
-                       Style="{ThemeResource TitleTextBlockStyle}" />
-
-            <Button Content="Get Started"
-                    HorizontalAlignment="Center"
-                    Margin="10"
-                    Width="250"
-                    Height="40"
-                    Style="{ThemeResource ButtonRevealStyle}"
-                    Command="{Binding GoToPlanningPageCommand}" />
-
-        </StackPanel>
-
-        <ProgressRing IsActive="{x:Bind ViewModel.IsBusy}"
-                      Grid.Row="1"
-                      Width="50"
-                      Height="50"
-                      Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Center"
-                      Foreground="{ThemeResource SystemAccentColor}" />
 
         <GridView ItemsSource="{Binding Items}"
                   Grid.Row="1"
                   CanDrag="False"
                   SelectionMode="None"
-                  Visibility="{x:Bind ViewModel.IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}"
+                  Visibility="{Binding IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}"
                   CanReorderItems="False">
             <GridView.ItemTemplate>
                 <DataTemplate>
@@ -86,7 +53,7 @@
                                 <TextBlock Style="{ThemeResource BodyTextBlockStyle}"
                                            Text="{Binding Model.Note}"
                                            Margin="5"
-                                           FontSize="17"/>    
+                                           FontSize="17"/>
                             </ScrollViewer>
 
                             <Grid Grid.Row="2">
@@ -143,12 +110,48 @@
                                     HorizontalAlignment="Stretch"
                                     Margin="5"
                                     Style="{ThemeResource ButtonRevealStyle}" 
-                                    Command="{Binding OpenPlanningPageCommand}"/>    
+                                    Command="{Binding OpenPlanningPageCommand}"/>
                         </Grid>
                     </Border>
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
+
+        <StackPanel Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Visibility="{Binding IsHistoryEmpty, Converter={StaticResource BoolToVisibilityConverter}}">
+
+            <Image Source="/Assets/sad_but_relieved_face_3d.png"
+                   Width="150"
+                   Height="150"
+                   Margin="10"
+                   HorizontalAlignment="Center"/>
+
+            <TextBlock Text="No notes submitted yet!, click Get Started and submit your first note"
+                       HorizontalAlignment="Center"
+                       Margin="10" 
+                       Style="{ThemeResource TitleTextBlockStyle}" />
+
+            <Button Content="Get Started"
+                    HorizontalAlignment="Center"
+                    Margin="10"
+                    Width="250"
+                    Height="40"
+                    Style="{ThemeResource ButtonRevealStyle}"
+                    Command="{Binding GoToPlanningPageCommand}" />
+
+        </StackPanel>
+
+        <ProgressRing IsActive="{Binding IsBusy}"
+                      Grid.Row="1"
+                      Width="50"
+                      Height="50"
+                      Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Foreground="{ThemeResource SystemAccentColor}" />
+
                   
 
     </Grid>
