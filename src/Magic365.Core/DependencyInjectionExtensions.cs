@@ -37,8 +37,8 @@ public static class DependencyInjectionExtensions
         return services.AddSingleton(sp =>
         {
             var options = new Options.AIAnalyzerOptions();
-            options.AnalyzeUrl = config["AnalyzerFunction:Url"];
-            options.ApiKey = config["AnalyzerFunction:ApiKey"];
+            options.AnalyzeUrl = config["AnalyzerFunctionUrl"];
+            options.ApiKey = config["AnalyzerFunctionApiKey"];
             return options;
         });
     }
