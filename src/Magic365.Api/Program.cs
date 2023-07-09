@@ -115,7 +115,7 @@ app.MapPost("/usages/track-event", async ([FromBody] TrackUserEventDto eventDto,
 app.MapGet("/plans/history", async ([FromQuery] string userId, IPlansStorageService plansStorageService) =>
 {
     var result = await plansStorageService.ListPlansAsync(userId);
-    return Results.Ok(result.Select(r => new PlanHistoryDto
+    return Results.Ok(result.OrderByDescending(o => o.PlanDate).Select(r => new PlanHistoryDto
     {
         Note = r.Note,
         Date = r.PlanDate,

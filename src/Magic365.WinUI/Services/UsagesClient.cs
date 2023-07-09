@@ -1,11 +1,20 @@
-﻿using Magic365.Client.ViewModels.Exceptions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http.Json;
+using System.Text;
+using System.Threading.Tasks;
+using Magic365.Client.ViewModels;
+using Magic365.Client.ViewModels.Exceptions;
 using Magic365.Client.ViewModels.Interfaces;
 using Magic365.Client.ViewModels.Models;
+using Magic365.Client.ViewModels.Services;
 using Magic365.Shared.DTOs;
 using Magic365.Shared.Responses;
-using System.Net.Http.Json;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
 
-namespace Magic365.Client.ViewModels.Services;
+namespace Magic365.WinUI.Services;
 
 public class HttpUsageTrackingClient : HttpClientServiceBase, IUsagesClient
 {
@@ -37,10 +46,11 @@ public class HttpUsageTrackingClient : HttpClientServiceBase, IUsagesClient
         }
     }
 
-
     public async Task TrackEventAsync(string? token, TrackUserEventDto request)
     {
-
+        var eventData = request.EventData?.GetType().GetProperties().ToDictionary(x => x.Name, x => x.GetValue(request.EventData)?.ToString()) ?? new Dictionary<string, string?>();
+        eventData.Add("UserId", SessionVariables.SessionId);
+        Analytics.TrackEvent(request.EventName, eventData);
         using var client = new HttpClient();
         client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 

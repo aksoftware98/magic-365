@@ -15,7 +15,7 @@ namespace Magic365.WinUI.Services
 
         private readonly ILocalSettingsService _localSettings;
 		private static string[] Scopes = new string[] { "user.read", "Calendars.ReadWrite", "Tasks.ReadWrite", "Contacts.ReadWrite", "MailboxSettings.Read" };
-		private const string ClientId = "ec137e7d-ceb1-453a-bb59-65dc4be40822";
+		private const string ClientId = "e405696a-a43b-44df-809c-c6efeb420085";
 		private const string Tenant = "common";
 		private const string Authority = "https://login.microsoftonline.com/" + Tenant;
 

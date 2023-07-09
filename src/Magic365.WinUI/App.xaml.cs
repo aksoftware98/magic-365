@@ -18,6 +18,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+
 namespace Magic365.WinUI;
 
 // To learn more about WinUI 3, see https://docs.microsoft.com/windows/apps/winui/winui3/.
@@ -64,6 +68,9 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
+
+        AppCenter.Start(Secrets.AppCenterId,
+                  typeof(Analytics), typeof(Crashes));
 
         Host = Microsoft.Extensions.Hosting.Host.
         CreateDefaultBuilder().

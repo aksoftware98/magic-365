@@ -81,6 +81,16 @@
                         </StackPanel>
                     </NavigationViewItem.Content>
                 </NavigationViewItem>
+
+                <NavigationViewItem IsEnabled="False">
+                    <NavigationViewItem.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Assets/stopwatch_3d.png" Width="32" Height="32" 
+                                   VerticalAlignment="Center"/>
+                            <TextBlock Text="Time Tracker (Coming Soon)" Margin="15,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </NavigationViewItem.Content>
+                </NavigationViewItem>
             </NavigationView.MenuItems>
             <Grid >
                 <Frame x:Name="NavigationFrame" />
