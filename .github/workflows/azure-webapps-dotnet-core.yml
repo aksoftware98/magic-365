@@ -21,8 +21,8 @@ name: Build and deploy ASP.Net Core app to an Azure Web App
 
 env:
   AZURE_WEBAPP_NAME: magic365    # set this to the name of your Azure Web App
-  AZURE_WEBAPP_PACKAGE_PATH: 'src/Magic365.Api/.'      # set this to the path to your web app project, defaults to the repository root
-  DOTNET_VERSION: '7.0.x'                 # set this to the .NET Core version to use
+  AZURE_WEBAPP_PACKAGE_PATH: 'src/magic365.api'      # set this to the path to your web app project, defaults to the repository root
+  DOTNET_VERSION: '7.0'                 # set this to the .NET Core version to use
 
 on:
   push:
@@ -53,9 +53,11 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Build with dotnet
+        working-directory: src/MagicNote/MagicNote.Api
         run: dotnet build --configuration Release
 
       - name: dotnet publish
+        working-directory: src/MagicNote/MagicNote.Api
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
