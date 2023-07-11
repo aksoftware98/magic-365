@@ -16,9 +16,12 @@
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
-    <GenerateTestArtifacts>False</GenerateTestArtifacts>
+    <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Never</AppxBundle>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <PackageCertificateThumbprint>BF0872E93147922A44AC6A969E4D329EDF86B61D</PackageCertificateThumbprint>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Assets\brain_3d.png" />
@@ -80,6 +83,7 @@
     <None Remove="Assets\Sun.png" />
     <None Remove="Assets\telephone_3d.png" />
     <None Remove="Assets\watch_3d.png" />
+    <None Remove="Assets\WindowIcon.ico" />
     <None Remove="Controls\EventPlanDataTemplate.xaml" />
     <None Remove="Controls\MeetingPlanDataTemplate.xaml" />
     <None Remove="Controls\ToDoItemPlanDataTemplate.xaml" />
