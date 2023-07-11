@@ -46,8 +46,6 @@ public sealed partial class ShellPage : Page
         KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.GoBack));
         _themeSelectorService.SetRequestedThemeAsync();
         ViewModel.NavigationService.NavigateTo(typeof(HomeViewModel).FullName);
-
-        Analytics.StartSession();
     }
 
     private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)

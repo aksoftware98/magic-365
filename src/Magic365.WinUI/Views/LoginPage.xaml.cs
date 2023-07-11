@@ -7,6 +7,7 @@ using Magic365.Client.ViewModels.Models;
 using Magic365.WinUI.Helpers;
 using Magic365.WinUI.ViewModels;
 using Magic365.WinUI.Views;
+using Microsoft.AppCenter.Analytics;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -54,6 +55,8 @@ namespace Magic365.WinUI.Pages
             App.MainWindow.ExtendsContentIntoTitleBar = true;
             App.MainWindow.SetTitleBar(AppTitleBar);
             App.MainWindow.Activated += MainWindow_Activated;
+
+            Analytics.StartSession();
         }
 
         private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
