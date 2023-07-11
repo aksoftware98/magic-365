@@ -70,6 +70,7 @@ namespace Magic365.AI.Functions
                             define the startDate and endDate for the Event and the meeting and print it in the following format ""yyyy-MM-dd"" and if the date is not specific set it to null. endDate if it's not defined also set it to null. 
                             for the startTime and endTime for the Event and the Meeting should be in the following format ""hh:mm:ss tt"" and if the endTime is not specific calculate at 30 mins from the startTime. 
                             The Meeting sentence contains should contain at least one person name, so show this name as JSON string array in the object. 
+                            To be able to calculate the date correctly, today's date is '{TODAY_DATE}'
                             The final output should be like the following example
                             ---
                             [
@@ -96,7 +97,7 @@ namespace Magic365.AI.Functions
                                 ""people"": [""Ahmad""]
                               }
                             ]
-                            ---";
+                            ---".Replace("TODAY_DATE", DateTime.UtcNow.ToString("yyyy-MM-dd"));
 
 			using var client = new HttpClient(); 
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
