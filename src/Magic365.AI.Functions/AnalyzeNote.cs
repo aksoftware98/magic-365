@@ -64,13 +64,16 @@ namespace Magic365.AI.Functions
 
                             Each sentence must be a type of three: ToDoItem, Event, Meeting. the sentence must be only one type and cannot have two types at the same time. 
                             the ToDoItem sentence is the sentence that represents actions and doesn't contain a time or people.
-                            the Event is the sentence that represents action but with a time and doesn't contain people. 
-                            the Meeting is like Event but it has people's names involved. 
+                            the Meeting sentence is when the user wants to meet with someone and it must contain a time and people. 
+                            the Event is the sentence that represents action but must has a time and doesn't contain people. 
                             action property is the actual action the user wants in the sentence.
                             define the startDate and endDate for the Event and the meeting and print it in the following format ""yyyy-MM-dd"" and if the date is not specific set it to null. endDate if it's not defined also set it to null. 
                             for the startTime and endTime for the Event and the Meeting should be in the following format ""hh:mm:ss tt"" and if the endTime is not specific calculate at 30 mins from the startTime. 
                             The Meeting sentence contains should contain at least one person name, so show this name as JSON string array in the object. 
-                            To be able to calculate the date correctly, today's date is '{TODAY_DATE}'
+                            To be able to calculate the date correctly, today's date is 'TODAY_DATE' and it's a 'WEEK_DAY'
+
+                            If the user submits any sentence that doesn't indicate to plan an action, just ignore the sentence and don't include it in the final output.
+
                             The final output should be like the following example
                             ---
                             [
@@ -97,7 +100,9 @@ namespace Magic365.AI.Functions
                                 ""people"": [""Ahmad""]
                               }
                             ]
-                            ---".Replace("TODAY_DATE", DateTime.UtcNow.ToString("yyyy-MM-dd"));
+                            ---"
+                    .Replace("TODAY_DATE", noteRequest.DateTime.ToString("yyyy-MM-dd"))
+                    .Replace("WEEK_DAY", noteRequest.DateTime.ToString("dddd"));
 
 			using var client = new HttpClient(); 
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
@@ -129,6 +134,12 @@ namespace Magic365.AI.Functions
     {
         [JsonPropertyName("message")]
         public string Message { get; set; }
+
+        [JsonPropertyName("dateTime")]
+        public DateTime DateTime
+        {
+            get; set;
+        } = DateTime.UtcNow;
     }
 
     public class NoteResponse

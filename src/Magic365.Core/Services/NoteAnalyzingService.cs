@@ -42,7 +42,8 @@ namespace Magic365.Core.Services
 
 			var response = await _httpClient.PostAsJsonAsync($"{_options.AnalyzeUrl}?code={_options.ApiKey}", new
 			{
-				message = query
+				message = query,
+                dateTime = DateTime.UtcNow.ToString("yyyy-MM-dd hh:mm tt")
 			});
 
             if (response.IsSuccessStatusCode)
