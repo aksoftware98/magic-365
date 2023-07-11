@@ -40,6 +40,7 @@ namespace Magic365.WinUI.Pages
         {
             this.InitializeComponent();
             Loaded += LoginPage_Loaded;
+            Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Magic365"));
             DataContext = _viewModel = App.GetService<LoginViewModel>();
             _navigationService = App.GetService<INavigationService>();
             _localSettingsService = App.GetService<ILocalSettingsService>();

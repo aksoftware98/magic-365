@@ -1,5 +1,7 @@
 ﻿using Magic365.Client.ViewModels.Interfaces;
 using Magic365.Client.ViewModels.Models;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
@@ -69,6 +71,7 @@ namespace Magic365.WinUI.Services
 			}
 			catch (Exception ex)
 			{
+                Crashes.TrackError(ex);
 				throw;
 			}
             await _localSettings.SaveSettingAsync("IsLoggedIn", true);

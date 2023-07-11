@@ -9,7 +9,7 @@ namespace Magic365.WinUI;
 public static class TokenCacheHelper
 {
     // Define the path of the cache file
-    public static readonly string CacheFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location + ".msalcache.bin3";
+    public static readonly string CacheFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Magic365", ".msalcache.bin3");
 
     // Define a lock object to prevent concurrent access to the file
     private static readonly object FileLock = new object();
