@@ -50,7 +50,7 @@ namespace Magic365.Client.ViewModels
 			catch (Exception ex)
 			{
 				// TODO: Log the error 
-				await _messageDialogService.ShowOkDialogAsync("Error", ex.Message);
+				await _messageDialogService.ShowOkDialogAsync("Error", "An error occurred while trying to sign in. Please try again later.");
 			}
 			
 			IsBusy = false; 
