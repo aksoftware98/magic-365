@@ -67,7 +67,7 @@ namespace Magic365.AI.Functions
                             the Meeting sentence is when the user wants to meet with someone and it must contain a time and people. 
                             the Event is the sentence that represents action but must has a time and doesn't contain people. 
                             action property is the actual action the user wants in the sentence.
-                            define the startDate and endDate for the Event and the meeting and print it in the following format ""yyyy-MM-dd"" and if the date is not specific set it to null. endDate if it's not defined also set it to null. 
+                            define the startDate and endDate for the Event and the meeting and print it in the following format ""yyyy-MM-dd"" and if the date is not specific set it to today's date. endDate if it's not defined also set it to today's date. 
                             for the startTime and endTime for the Event and the Meeting should be in the following format ""hh:mm:ss tt"" and if the endTime is not specific calculate at 30 mins from the startTime. 
                             The Meeting sentence contains should contain at least one person name, so show this name as JSON string array in the object. 
                             To be able to calculate the date correctly, today's date is 'TODAY_DATE' and it's a 'WEEK_DAY'
