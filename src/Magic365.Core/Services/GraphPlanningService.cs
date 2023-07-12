@@ -493,9 +493,7 @@ public class GraphPlanningService : IPlanningService
             _logger.LogError($"Failed to retrieve the tasks list from Graph: {ex.Message}");
             throw;
         }
-
     }
-
 
     /// <summary>
     /// Retrieve the user timezone from the mailbox settings 
@@ -505,9 +503,14 @@ public class GraphPlanningService : IPlanningService
     private async Task<string> GetUserTimeZoneFromGraphAsync()
     {
         var response = await _httpClient.GetAsync("https://graph.microsoft.com/v1.0/me/mailboxsettings/timeZone");
-        _logger.LogWarning($"Time zone content {await response.Content.ReadAsStringAsync()}");
+        var content = await response.Content.ReadAsStringAsync();
         if (response.IsSuccessStatusCode)
         {
+            if (string.IsNullOrWhiteSpace(content))
+            {
+                _logger.LogWarning($"Time zone was not found, retrieving the default UTC");
+                return "UTC";
+            }
             var result = await response.Content.ReadFromJsonAsync<TimeZoneResponse>();
             return result?.Value ?? "UTC";
         }
