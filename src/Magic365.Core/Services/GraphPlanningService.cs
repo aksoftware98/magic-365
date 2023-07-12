@@ -505,7 +505,7 @@ public class GraphPlanningService : IPlanningService
     private async Task<string> GetUserTimeZoneFromGraphAsync()
     {
         var response = await _httpClient.GetAsync("https://graph.microsoft.com/v1.0/me/mailboxsettings/timeZone");
-
+        _logger.LogWarning($"Time zone content {await response.Content.ReadAsStringAsync()}");
         if (response.IsSuccessStatusCode)
         {
             var result = await response.Content.ReadFromJsonAsync<TimeZoneResponse>();
