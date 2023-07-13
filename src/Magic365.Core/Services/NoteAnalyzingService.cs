@@ -83,20 +83,19 @@ namespace Magic365.Core.Services
 								Type = PlanEntityType.Event
 							});
 							break;
-						case "Meeting":
-							items.Add(new PlanItem
-							{
-								Title = planItem.Action,
-								EndTime = DateTime.ParseExact(planItem.EndDateTime, "yyyy-MM-dd hh:mm tt", null),
-								StartTime = DateTime.ParseExact(planItem.StartDateTime, "yyyy-MM-dd hh:mm tt", null),
-								Type = PlanEntityType.Meeting,
-								People = planItem?.People?.Select(p => new MeetingPerson
-								{
-									Name = p
-								})
-							});
-							break;
-						default:
+                        case "Meeting":
+                            var peopleNames = planItem?.People;
+                            var meetingPeople = await FetchMeetingContactsAsync(planItem, peopleNames);
+                            items.Add(new PlanItem
+                            {
+                                Title = planItem.Action,
+                                EndTime = DateTime.ParseExact(planItem.EndDateTime, "yyyy-MM-dd hh:mm tt", null),
+                                StartTime = DateTime.ParseExact(planItem.StartDateTime, "yyyy-MM-dd hh:mm tt", null),
+                                Type = PlanEntityType.Meeting,
+                                People = meetingPeople
+                            });
+                            break;
+                        default:
 							break;
 					}
 				}
@@ -109,5 +108,45 @@ namespace Magic365.Core.Services
 				throw new DominException("Failed to analyze the submitted note");
 			}
         }
-	}
+
+        private async Task<List<MeetingPerson>> FetchMeetingContactsAsync(AnalyzerResultItem? planItem, string[]? peopleNames)
+        {
+            var meetingPeople = planItem?.People?.Select(p => new MeetingPerson
+            {
+                Name = p
+            }).ToList() ?? new List<MeetingPerson>();
+            if (meetingPeople.Any())
+            {
+                var peopleFitler = string.Join(" or ", peopleNames.Select(s => $"startswith(displayName,'{s}')"));
+                try
+                {
+                    var fetchContacts = await _graphClient
+                                                .Me
+                                                .Contacts
+                                                .GetAsync(options =>
+                                                {
+                                                    options.QueryParameters.Filter = $"{peopleFitler}";
+                                                });
+
+                    foreach (var person in meetingPeople)
+                    {
+                        var existingContact = fetchContacts?.Value?.FirstOrDefault(c => c.DisplayName?.StartsWith(person.Name) ?? false);
+                        if (existingContact != null)
+                        {
+                            person.Email = existingContact.EmailAddresses?.FirstOrDefault()?.Address;
+                            person.Id = existingContact.Id;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Failed to fetch the meeting contacts. Error: {ex.Message}");
+                }
+                
+
+            }
+
+            return meetingPeople;
+        }
+    }
 }
