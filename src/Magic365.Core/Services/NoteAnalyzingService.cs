@@ -109,6 +109,16 @@ namespace Magic365.Core.Services
 			}
         }
 
+        /// <summary>
+        /// Fetching the meeting contacts from the user's contact list based on the names mentioned in the note.
+        /// // TODO: The logic should be improved to handle the case when the user has multiple contacts with the same name. 
+        /// #15 https://github.com/aksoftware98/magic-365/issues/15
+        /// // TODO: Add support to fetch the meeting's contact email and display name from the tenant users list not only Graph contacts 
+        /// #16 https://github.com/aksoftware98/magic-365/issues/16
+        /// </summary>
+        /// <param name="planItem"></param>
+        /// <param name="peopleNames"></param>
+        /// <returns></returns>
         private async Task<List<MeetingPerson>> FetchMeetingContactsAsync(AnalyzerResultItem? planItem, string[]? peopleNames)
         {
             var meetingPeople = planItem?.People?.Select(p => new MeetingPerson
@@ -135,6 +145,7 @@ namespace Magic365.Core.Services
                         {
                             person.Email = existingContact.EmailAddresses?.FirstOrDefault()?.Address;
                             person.Id = existingContact.Id;
+                            person.Name = existingContact.DisplayName;
                         }
                     }
                 }
