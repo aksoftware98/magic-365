@@ -53,7 +53,7 @@ public partial class HistoryViewModel : ObservableObject
         IsBusy = true;
         try
         {
-            var result = await _planningClient.ListHistoryAsync(SessionVariables.User.AccessToken,
+            var result = await _planningClient.ListHistoryAsync(SessionVariables.User.IdToken,
                                                                 SessionVariables.User.Email);
             Items = new ObservableCollection<PlanHistoryViewModel>(result
                                                                     .Select(x => new PlanHistoryViewModel(_navigationService, _usagesClient, x)));

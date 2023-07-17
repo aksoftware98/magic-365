@@ -7,6 +7,7 @@ using Magic365.Shared.DTOs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Kiota.Abstractions.Authentication;
 using System.Net.Http.Headers;
 
@@ -14,10 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-	.AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"))
-	   .EnableTokenAcquisitionToCallDownstreamApi()
-			.AddMicrosoftGraph(builder.Configuration.GetSection("DownstreamApi"))
-			.AddInMemoryTokenCaches();
+     .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
 builder.Services.AddAuthorization(); 
 
@@ -44,7 +42,6 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ErrorHandlingMiddleware>(); 
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); 
 app.UseAuthorization();
 
 #region API Endpoints
@@ -124,6 +121,7 @@ app.MapGet("/plans/history", async ([FromQuery] string userId, IPlansStorageServ
         ToDoItemsCount = r.ToDoItemsCount
     }));
 })
+    .RequireAuthorization()
     .WithName("List History")
     .WithDescription("List the history of submitted notes")
     .WithOpenApi();

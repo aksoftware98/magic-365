@@ -57,9 +57,10 @@ namespace Magic365.WinUI.Services
 
 			try
 			{
-				authResult = await PublicClientApp.AcquireTokenSilent(Scopes, firstAccount)
-												  .ExecuteAsync();
-			}
+                authResult = await PublicClientApp.AcquireTokenSilent(Scopes, firstAccount)
+                                                  .ExecuteAsync();
+
+            }
 			catch (MsalUiRequiredException ex)
 			{
 				Debug.WriteLine($"MsalUiRequiredException: {ex.Message}");
@@ -75,7 +76,10 @@ namespace Magic365.WinUI.Services
 				throw;
 			}
             await _localSettings.SaveSettingAsync("IsLoggedIn", true);
-			return new User(authResult.AccessToken, authResult.ClaimsPrincipal.FindFirst("name").Value, "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000", authResult.ClaimsPrincipal.FindFirst("preferred_username").Value);
+			return new User(authResult.AccessToken, authResult.ClaimsPrincipal.FindFirst("name").Value, "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000", authResult.ClaimsPrincipal.FindFirst("preferred_username").Value)
+            {
+                IdToken = authResult.IdToken,
+            };
 		}
 
 

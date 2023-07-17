@@ -23,6 +23,11 @@ namespace Magic365.Client.ViewModels.Models
 
 		public string ProfilePicture { get; set; }
 
+        public string IdToken
+        {
+            get; set;
+        }
+
         public string Email
         {
             get; set;
