@@ -16,7 +16,8 @@ namespace Magic365.WinUI.Services
 	{
 
         private readonly ILocalSettingsService _localSettings;
-		private static string[] Scopes = new string[] { "user.read", "Calendars.ReadWrite", "Tasks.ReadWrite", "Contacts.ReadWrite", "MailboxSettings.Read" };
+        private static string[] Scopes = new string[] { "api://e405696a-a43b-44df-809c-c6efeb420085/Magic365.FullAccess" };
+		private static string[] ExtraScopes = new string[] { "user.read", "Calendars.ReadWrite", "Tasks.ReadWrite", "Contacts.ReadWrite", "MailboxSettings.Read" };
 		private const string ClientId = "e405696a-a43b-44df-809c-c6efeb420085";
 		private const string Tenant = "common";
 		private const string Authority = "https://login.microsoftonline.com/" + Tenant;
@@ -66,6 +67,7 @@ namespace Magic365.WinUI.Services
 				Debug.WriteLine($"MsalUiRequiredException: {ex.Message}");
                 await _localSettings.SaveSettingAsync("IsLoggedIn", false);
                 authResult = await PublicClientApp.AcquireTokenInteractive(Scopes)
+                                                   .WithExtraScopesToConsent(ExtraScopes)
 												  .ExecuteAsync()
 												  .ConfigureAwait(false);
 				
