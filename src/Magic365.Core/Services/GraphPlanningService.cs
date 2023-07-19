@@ -1,6 +1,7 @@
 ﻿using Magic365.Core.Exceptions;
 using Magic365.Core.Interfaces;
 using Magic365.Core.Models;
+using Magic365.Core.Options;
 using Magic365.Shared;
 using Magic365.Shared.DTOs;
 using Microsoft.Extensions.Logging;
@@ -27,16 +28,22 @@ public class GraphPlanningService : IPlanningService
     private readonly GraphServiceClient _graph;
     private readonly HttpClient _httpClient;
     private readonly IPlansStorageService _plansStorage;
+    private readonly IGraphAccessTokenProvider _tokenProvider;
+    private readonly IdentityOptions _identity;
     private readonly ILogger<GraphPlanningService> _logger;
     public GraphPlanningService(GraphServiceClient graph,
                                 HttpClient httpClient,
                                 ILogger<GraphPlanningService> logger,
-                                IPlansStorageService plansStorage)
+                                IPlansStorageService plansStorage,
+                                IGraphAccessTokenProvider tokenProvider,
+                                IdentityOptions identity)
     {
         _graph = graph;
         _httpClient = httpClient;
         _logger = logger;
         _plansStorage = plansStorage;
+        _tokenProvider = tokenProvider;
+        _identity = identity;
     }
     #region Analyze Note 
     /// <summary>
@@ -499,7 +506,10 @@ public class GraphPlanningService : IPlanningService
     /// <exception cref="Exception"></exception>
     private async Task<string> GetUserTimeZoneFromGraphAsync()
     {
+        var token = await _tokenProvider.GetTokenAsync(new[] { "MailboxSettings.Read" }, _identity.IdToken, _identity.TenantId);
+        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
         var response = await _httpClient.GetAsync("https://graph.microsoft.com/v1.0/me/mailboxsettings/timeZone");
+        
         var content = await response.Content.ReadAsStringAsync();
         if (response.IsSuccessStatusCode)
         {
