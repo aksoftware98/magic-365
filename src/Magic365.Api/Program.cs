@@ -6,8 +6,10 @@ using Magic365.Shared;
 using Magic365.Shared.DTOs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Graph;
 using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Kiota.Abstractions;
 using Microsoft.Kiota.Abstractions.Authentication;
 using System.Net.Http.Headers;
 
@@ -25,10 +27,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCoreServices(builder.Configuration);
 
 builder.Services.AddHttpContextAccessor();
-
 // Add the Graph service client and an authorized HttpClient 
 builder.Services.AddAuthorizedHttpClient();
-builder.Services.AddGraphServiceClient();
+
 builder.Services.AddApplicationInsightsTelemetry();
 
 var app = builder.Build();
