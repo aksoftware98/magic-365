@@ -2,6 +2,7 @@
 using Azure.Data.Tables;
 using Magic365.Core.Interfaces;
 using Magic365.Core.Models;
+using Magic365.Core.Options;
 using Magic365.Shared.DTOs;
 
 namespace Magic365.Core.Services;
@@ -9,10 +10,13 @@ namespace Magic365.Core.Services;
 public class TableStoragePlansService : IPlansStorageService
 {
     private readonly TableClient _plansTable;
-
-    public TableStoragePlansService(string connectionString)
+    private readonly MicrosoftAuthenticationOptions _authOptions;
+    private readonly IdentityOptions _identityOptions;
+    public TableStoragePlansService(string connectionString, MicrosoftAuthenticationOptions authOptions, IdentityOptions identityOptions)
     {
         _plansTable = new TableClient(connectionString, "UserPlans");
+        _authOptions = authOptions;
+        _identityOptions = identityOptions;
     }
 
     public async Task SavePlanAsync(PlanMetadata session)

@@ -6,7 +6,10 @@ using Magic365.Shared;
 using Magic365.Shared.DTOs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Graph;
 using Microsoft.Identity.Web;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Kiota.Abstractions;
 using Microsoft.Kiota.Abstractions.Authentication;
 using System.Net.Http.Headers;
 
@@ -14,10 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-	.AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"))
-	   .EnableTokenAcquisitionToCallDownstreamApi()
-			.AddMicrosoftGraph(builder.Configuration.GetSection("DownstreamApi"))
-			.AddInMemoryTokenCaches();
+     .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
 builder.Services.AddAuthorization(); 
 
@@ -27,10 +27,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCoreServices(builder.Configuration);
 
 builder.Services.AddHttpContextAccessor();
-
 // Add the Graph service client and an authorized HttpClient 
 builder.Services.AddAuthorizedHttpClient();
-builder.Services.AddGraphServiceClient();
+
 builder.Services.AddApplicationInsightsTelemetry();
 
 var app = builder.Build();
@@ -44,7 +43,6 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ErrorHandlingMiddleware>(); 
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); 
 app.UseAuthorization();
 
 #region API Endpoints
@@ -124,6 +122,7 @@ app.MapGet("/plans/history", async ([FromQuery] string userId, IPlansStorageServ
         ToDoItemsCount = r.ToDoItemsCount
     }));
 })
+    .RequireAuthorization()
     .WithName("List History")
     .WithDescription("List the history of submitted notes")
     .WithOpenApi();

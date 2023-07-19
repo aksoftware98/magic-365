@@ -16,7 +16,8 @@ namespace Magic365.WinUI.Services
 	{
 
         private readonly ILocalSettingsService _localSettings;
-		private static string[] Scopes = new string[] { "user.read", "Calendars.ReadWrite", "Tasks.ReadWrite", "Contacts.ReadWrite", "MailboxSettings.Read" };
+        private static string[] Scopes = new string[] { "api://e405696a-a43b-44df-809c-c6efeb420085/Magic365.FullAccess" };
+		private static string[] ExtraScopes = new string[] { "user.read", "Calendars.ReadWrite", "Tasks.ReadWrite", "Contacts.ReadWrite", "MailboxSettings.Read" };
 		private const string ClientId = "e405696a-a43b-44df-809c-c6efeb420085";
 		private const string Tenant = "common";
 		private const string Authority = "https://login.microsoftonline.com/" + Tenant;
@@ -57,14 +58,16 @@ namespace Magic365.WinUI.Services
 
 			try
 			{
-				authResult = await PublicClientApp.AcquireTokenSilent(Scopes, firstAccount)
-												  .ExecuteAsync();
-			}
+                authResult = await PublicClientApp.AcquireTokenSilent(Scopes, firstAccount)
+                                                  .ExecuteAsync();
+
+            }
 			catch (MsalUiRequiredException ex)
 			{
 				Debug.WriteLine($"MsalUiRequiredException: {ex.Message}");
                 await _localSettings.SaveSettingAsync("IsLoggedIn", false);
                 authResult = await PublicClientApp.AcquireTokenInteractive(Scopes)
+                                                   .WithExtraScopesToConsent(ExtraScopes)
 												  .ExecuteAsync()
 												  .ConfigureAwait(false);
 				
@@ -75,7 +78,10 @@ namespace Magic365.WinUI.Services
 				throw;
 			}
             await _localSettings.SaveSettingAsync("IsLoggedIn", true);
-			return new User(authResult.AccessToken, authResult.ClaimsPrincipal.FindFirst("name").Value, "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000", authResult.ClaimsPrincipal.FindFirst("preferred_username").Value);
+			return new User(authResult.AccessToken, authResult.ClaimsPrincipal.FindFirst("name").Value, "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000", authResult.ClaimsPrincipal.FindFirst("preferred_username").Value)
+            {
+                IdToken = authResult.IdToken,
+            };
 		}
 
 
