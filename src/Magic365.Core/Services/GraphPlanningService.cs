@@ -280,11 +280,7 @@ public class GraphPlanningService : IPlanningService
         if (plan.Items.Count() > 12)
             throw new DominException("The free version supports only up to 12 tasks a day");
         // TODO: Remove the limitation of the date from tomorrow to understand it from the AI or allow the user to choose a date before start populating the note
-        var tomorrow = DateTime.Now.AddDays(1);
-        var year = tomorrow.Year;
-        var month = tomorrow.Month;
-        var day = tomorrow.Day;
-
+        
         // Get the tasks list of the to-do list
         var tasksList = await GetDefaultTasksListFromGraphAsync();
         var userTimeZone = await GetUserTimeZoneFromGraphAsync();
@@ -292,9 +288,9 @@ public class GraphPlanningService : IPlanningService
         // Build the batch requests
         var batchReqeustContent = new BatchRequestContent(_graph);
 
-        await BuildToDoItemsGraphRequestsAsync(plan, tomorrow, tasksList, userTimeZone, batchReqeustContent);
-        await BuildMeetingsGraphRequestsAsync(plan, year, month, day, userTimeZone, batchReqeustContent);
-        await BuildEventsGraphRequestsAsync(plan, year, month, day, userTimeZone, batchReqeustContent);
+        await BuildToDoItemsGraphRequestsAsync(plan, tasksList, userTimeZone, batchReqeustContent);
+        await BuildMeetingsGraphRequestsAsync(plan, userTimeZone, batchReqeustContent);
+        await BuildEventsGraphRequestsAsync(plan, userTimeZone, batchReqeustContent);
 
         await _graph.Batch.PostAsync(batchReqeustContent);
 
@@ -310,7 +306,7 @@ public class GraphPlanningService : IPlanningService
     }
 
     #region Graph Calls 
-    private async Task BuildEventsGraphRequestsAsync(PlanDetails plan, int year, int month, int day, string userTimeZone, BatchRequestContent batchReqeustContent)
+    private async Task BuildEventsGraphRequestsAsync(PlanDetails plan, string userTimeZone, BatchRequestContent batchReqeustContent)
     {
         // Check if there is meetings in the call 
         var events = plan.Items.Where(i => i.Type == PlanEntityType.Event);
@@ -318,14 +314,14 @@ public class GraphPlanningService : IPlanningService
         {
             foreach (var item in events)
             {
-                RequestInformation calendarEventRequest = BuildPostEventGraphRequest(year, month, day, userTimeZone, item);
+                RequestInformation calendarEventRequest = BuildPostEventGraphRequest(userTimeZone, item);
 
                 await batchReqeustContent.AddBatchRequestStepAsync(calendarEventRequest);
             }
         }
     }
 
-    private async Task BuildMeetingsGraphRequestsAsync(PlanDetails plan, int year, int month, int day, string userTimeZone, BatchRequestContent batchReqeustContent)
+    private async Task BuildMeetingsGraphRequestsAsync(PlanDetails plan, string userTimeZone, BatchRequestContent batchReqeustContent)
     {
         // Build the events item batch requests 
         var meetings = plan.Items.Where(i => i.Type == PlanEntityType.Meeting);
@@ -333,7 +329,7 @@ public class GraphPlanningService : IPlanningService
         {
             foreach (var item in meetings)
             {
-                var calendarMeetingRequest = BuildPostMeetingGraphRequest(year, month, day, userTimeZone, item);
+                var calendarMeetingRequest = BuildPostMeetingGraphRequest(userTimeZone, item);
 
                 foreach (var contact in item.People)
                 {
@@ -377,7 +373,7 @@ public class GraphPlanningService : IPlanningService
         return contactRequest;
     }
 
-    private async Task BuildToDoItemsGraphRequestsAsync(PlanDetails plan, DateTime tomorrow, TodoTaskList tasksList, string userTimeZone, BatchRequestContent batchReqeustContent)
+    private async Task BuildToDoItemsGraphRequestsAsync(PlanDetails plan, TodoTaskList tasksList, string userTimeZone, BatchRequestContent batchReqeustContent)
     {
         // Build the to-do items batch requests 
         var todoItems = plan.Items.Where(i => i.Type == PlanEntityType.ToDoItem);
@@ -386,25 +382,25 @@ public class GraphPlanningService : IPlanningService
         {
             foreach (var item in todoItems)
             {
-                var todoItemRequest = BuildPostToDoItemGraphRequest(tomorrow, tasksList, userTimeZone, item);
+                var todoItemRequest = BuildPostToDoItemGraphRequest(tasksList, userTimeZone, item);
                 await batchReqeustContent.AddBatchRequestStepAsync(todoItemRequest);
             }
         }
     }
 
-    private RequestInformation BuildPostEventGraphRequest(int year, int month, int day, string userTimeZone, PlanItem? item)
+    private RequestInformation BuildPostEventGraphRequest(string userTimeZone, PlanItem? item)
     {
         var calendarEvent = new Event
         {
             Subject = item.Title,
             Start = new DateTimeTimeZone
             {
-                DateTime = new DateTime(year, month, day, item.StartTime.Value.Hour, item.StartTime.Value.Minute, 0).ToString("yyyy-MM-ddTHH:mm:ss.ffff"),
+                DateTime = new DateTime(item.StartTime.Value.Year, item.StartTime.Value.Month, item.StartTime.Value.Day, item.StartTime.Value.Hour, item.StartTime.Value.Minute, 0).ToString("yyyy-MM-ddTHH:mm:ss.ffff"),
                 TimeZone = userTimeZone
             },
             End = new DateTimeTimeZone
             {
-                DateTime = new DateTime(year, month, day, item.EndTime.Value.Hour, item.EndTime.Value.Minute, 0).ToString("yyyy-MM-ddTHH:mm:ss.ffff"),
+                DateTime = new DateTime(item.EndTime.Value.Year, item.EndTime.Value.Month, item.EndTime.Value.Day, item.EndTime.Value.Hour, item.EndTime.Value.Minute, 0).ToString("yyyy-MM-ddTHH:mm:ss.ffff"),
                 TimeZone = userTimeZone
             }
         };
@@ -416,19 +412,19 @@ public class GraphPlanningService : IPlanningService
         return calendarEventRequest;
     }
 
-    private RequestInformation BuildPostMeetingGraphRequest(int year, int month, int day, string userTimeZone, PlanItem? item)
+    private RequestInformation BuildPostMeetingGraphRequest(string userTimeZone, PlanItem? item)
     {
         var calendarMeeting = new Event
         {
             Subject = item.Title,
             Start = new DateTimeTimeZone
             {
-                DateTime = new DateTime(year, month, day, item.StartTime.Value.Hour, item.StartTime.Value.Minute, 0).ToString("yyyy-MM-ddTHH:mm:ss.ffff"),
+                DateTime = new DateTime(item.StartTime.Value.Year, item.StartTime.Value.Month, item.StartTime.Value.Day, item.StartTime.Value.Hour, item.StartTime.Value.Minute, 0).ToString("yyyy-MM-ddTHH:mm:ss.ffff"),
                 TimeZone = userTimeZone
             },
             End = new DateTimeTimeZone
             {
-                DateTime = new DateTime(year, month, day, item.EndTime.Value.Hour, item.EndTime.Value.Minute, 0).ToString("yyyy-MM-ddTHH:mm:ss.ffff"),
+                DateTime = new DateTime(item.EndTime.Value.Year, item.EndTime.Value.Month, item.EndTime.Value.Day, item.EndTime.Value.Hour, item.EndTime.Value.Minute, 0).ToString("yyyy-MM-ddTHH:mm:ss.ffff"),
                 TimeZone = userTimeZone
             },
             IsOnlineMeeting = true,
@@ -449,17 +445,18 @@ public class GraphPlanningService : IPlanningService
         return calendarEventRequest;
     }
 
-    private RequestInformation BuildPostToDoItemGraphRequest(DateTime tomorrow, TodoTaskList? tasksList, string userTimeZone, PlanItem? item)
+    private RequestInformation BuildPostToDoItemGraphRequest(TodoTaskList? tasksList, string userTimeZone, PlanItem? item)
     {
         var todoItem = new TodoTask
         {
             Title = item.Title,
-            DueDateTime = new DateTimeTimeZone()
-            {
-                DateTime = tomorrow.ToString("yyyy-MM-ddTHH:mm:ss.ffff"),
-                TimeZone = userTimeZone
-            }
         };
+        if (item.StartTime != null)
+            todoItem.DueDateTime = new()
+            {
+                TimeZone = userTimeZone,
+                DateTime = new DateTime(item.StartTime.Value.Year, item.StartTime.Value.Month, item.StartTime.Value.Day, item.StartTime.Value.Hour, item.StartTime.Value.Minute, 0).ToString("yyyy-MM-ddTHH:mm:ss.ffff"),
+            };
         var todoItemRequest = _graph
                                 .Me
                                 .Todo
