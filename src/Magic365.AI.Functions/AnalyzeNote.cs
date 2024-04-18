@@ -100,7 +100,8 @@ namespace Magic365.AI.Functions
                                 ""people"": [""Ahmad""]
                               }
                             ]
-                            ---"
+                            ---
+                            reply only with the output JSON"
                     .Replace("TODAY_DATE", noteRequest.DateTime.ToString("yyyy-MM-dd"))
                     .Replace("WEEK_DAY", noteRequest.DateTime.ToString("dddd"));
             prompt = prompt.Replace("[[user Message here]]", noteRequest.Message);
@@ -108,7 +109,7 @@ namespace Magic365.AI.Functions
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
             var response = await client.PostAsJsonAsync("https://api.openai.com/v1/chat/completions", new
             {
-                model = "gpt-3.5-turbo",
+                model = "gpt-4",
                 messages = new[] {
                     new
                     {
