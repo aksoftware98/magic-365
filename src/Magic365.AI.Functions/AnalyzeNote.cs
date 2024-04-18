@@ -59,7 +59,7 @@ namespace Magic365.AI.Functions
             var apiKey = _configuration["ApiKey"];
 			string prompt = @"Analyze the following plan as separate sentences and respond to me a JSON array containing list of objects, each object has the following properties: type, action, startDate, startTime, endDate, endTime, people
                             ---
-                            user Message here
+                            [[user Message here]]
                             ---
 
                             Each sentence must be a type of three: ToDoItem, Event, Meeting. the sentence must be only one type and cannot have two types at the same time. 
@@ -103,7 +103,7 @@ namespace Magic365.AI.Functions
                             ---"
                     .Replace("TODAY_DATE", noteRequest.DateTime.ToString("yyyy-MM-dd"))
                     .Replace("WEEK_DAY", noteRequest.DateTime.ToString("dddd"));
-
+            prompt = prompt.Replace("[[user Message here]]", noteRequest.Message);
 			using var client = new HttpClient(); 
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
             var response = await client.PostAsJsonAsync("https://api.openai.com/v1/chat/completions", new
@@ -113,13 +113,13 @@ namespace Magic365.AI.Functions
                     new
                     {
                         role = "system", 
-                        content = prompt
+                        content = ""
                     },
                     new
                     {
                         role = "user",
-                        content = noteRequest.Message
-					}
+                        content = prompt
+                    }
                 }
             });
             
