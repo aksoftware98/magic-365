@@ -78,8 +78,8 @@ namespace Magic365.Core.Services
 							items.Add(new PlanItem
 							{
 								Title = planItem.Action,
-								EndTime = DateTime.ParseExact(planItem.EndDateTime, "yyyy-MM-dd hh:mm tt", null),
-								StartTime = DateTime.ParseExact(planItem.StartDateTime, "yyyy-MM-dd hh:mm tt", null),
+								EndTime = DateTime.ParseExact(planItem.EndDateTime, "yyyy-MM-dd hh:mm:ss tt", null),
+								StartTime = DateTime.ParseExact(planItem.StartDateTime, "yyyy-MM-dd hh:mm:ss tt", null),
 								Type = PlanEntityType.Event
 							});
 							break;
@@ -89,8 +89,8 @@ namespace Magic365.Core.Services
                             items.Add(new PlanItem
                             {
                                 Title = planItem.Action,
-                                EndTime = DateTime.ParseExact(planItem.EndDateTime, "yyyy-MM-dd hh:mm tt", null),
-                                StartTime = DateTime.ParseExact(planItem.StartDateTime, "yyyy-MM-dd hh:mm tt", null),
+                                EndTime = DateTime.ParseExact(planItem.EndDateTime, "yyyy-MM-dd hh:mm:ss tt", null),
+                                StartTime = DateTime.ParseExact(planItem.StartDateTime, "yyyy-MM-dd hh:mm:ss tt", null),
                                 Type = PlanEntityType.Meeting,
                                 People = meetingPeople
                             });

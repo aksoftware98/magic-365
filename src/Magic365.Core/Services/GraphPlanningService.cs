@@ -293,7 +293,7 @@ public class GraphPlanningService : IPlanningService
         var userTimeZone = await GetUserTimeZoneFromGraphAsync();
 
         // Build the batch requests
-        var batchReqeustContent = new BatchRequestContent(_graph);
+        var batchReqeustContent = new BatchRequestContentCollection(_graph);
 
         await BuildToDoItemsGraphRequestsAsync(plan, tasksList, userTimeZone, batchReqeustContent);
         await BuildMeetingsGraphRequestsAsync(plan, userTimeZone, batchReqeustContent);
@@ -313,7 +313,7 @@ public class GraphPlanningService : IPlanningService
     }
 
     #region Graph Calls 
-    private async Task BuildEventsGraphRequestsAsync(PlanDetails plan, string userTimeZone, BatchRequestContent batchReqeustContent)
+    private async Task BuildEventsGraphRequestsAsync(PlanDetails plan, string userTimeZone, BatchRequestContentCollection batchReqeustContent)
     {
         // Check if there is meetings in the call 
         var events = plan.Items.Where(i => i.Type == PlanEntityType.Event);
@@ -328,7 +328,7 @@ public class GraphPlanningService : IPlanningService
         }
     }
 
-    private async Task BuildMeetingsGraphRequestsAsync(PlanDetails plan, string userTimeZone, BatchRequestContent batchReqeustContent)
+    private async Task BuildMeetingsGraphRequestsAsync(PlanDetails plan, string userTimeZone, BatchRequestContentCollection batchReqeustContent)
     {
         // Build the events item batch requests 
         var meetings = plan.Items.Where(i => i.Type == PlanEntityType.Meeting);
@@ -380,7 +380,7 @@ public class GraphPlanningService : IPlanningService
         return contactRequest;
     }
 
-    private async Task BuildToDoItemsGraphRequestsAsync(PlanDetails plan, TodoTaskList tasksList, string userTimeZone, BatchRequestContent batchReqeustContent)
+    private async Task BuildToDoItemsGraphRequestsAsync(PlanDetails plan, TodoTaskList tasksList, string userTimeZone, BatchRequestContentCollection batchReqeustContent)
     {
         // Build the to-do items batch requests 
         var todoItems = plan.Items.Where(i => i.Type == PlanEntityType.ToDoItem);
